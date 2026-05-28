@@ -1,0 +1,177 @@
+import type { FastifyInstance } from 'fastify';
+import { z } from 'zod';
+import { generateOrderNumber } from '../../utils/order-number.js';
+import { buildWhatsAppUrl } from '../../utils/whatsapp.js';
+import { getActiveGateway } from '../../utils/payment-gateway.js';
+import { validateDiscountCode } from '../admin/admin-discounts.controller.js';
+
+const createOrderSchema = z.object({
+  customerName: z.string().min(1),
+  phone: z.string().min(1),
+  email: z.string().email().optional(),
+  address: z.string().min(1),
+  city: z.string().min(1),
+  state: z.string().min(1),
+  postcode: z.string().min(1),
+  paymentMethod: z.enum(['WHATSAPP', 'BILLPLZ']),
+  discountCode: z.string().optional(),
+  notes: z.string().optional(),
+  items: z.array(
+    z.object({
+      productId: z.string(),
+      quantity: z.number().int().min(1),
+    })
+  ).min(1),
+});
+
+export async function createOrder(fastify: FastifyInstance, body: unknown) {
+  const data = createOrderSchema.parse(body);
+
+  const order = await fastify.prisma.$transaction(async (tx) => {
+    const products = await tx.product.findMany({
+      where: { id: { in: data.items.map((i) => i.productId) }, active: true },
+    });
+
+    if (products.length !== data.items.length) {
+      throw { statusCode: 400, message: 'One or more products not found or inactive' };
+    }
+
+    const productMap = new Map(products.map((p) => [p.id, p]));
+
+    for (const item of data.items) {
+      const product = productMap.get(item.productId)!;
+      if (product.stock < item.quantity) {
+        throw { statusCode: 400, message: `Insufficient stock for ${product.name}` };
+      }
+    }
+
+    const subtotal = data.items.reduce((sum, item) => {
+      const product = productMap.get(item.productId)!;
+      return sum + product.price * item.quantity;
+    }, 0);
+
+    const shippingSetting = await tx.setting.findUnique({ where: { key: 'shipping_fee' } });
+    const shippingFee = shippingSetting ? Math.round(parseFloat(shippingSetting.value) * 100) : 0;
+
+    let discountAmount = 0;
+    let discountCodeId: string | undefined;
+    if (data.discountCode) {
+      const result = await validateDiscountCode(fastify, data.discountCode, subtotal);
+      discountAmount = result.discountAmount;
+      discountCodeId = result.discount.id;
+    }
+
+    const total = Math.max(subtotal + shippingFee - discountAmount, 0);
+    const orderNumber = await generateOrderNumber(tx);
+
+    const created = await tx.order.create({
+      data: {
+        orderNumber,
+        customerName: data.customerName,
+        phone: data.phone,
+        email: data.email,
+        address: data.address,
+        city: data.city,
+        state: data.state,
+        postcode: data.postcode,
+        subtotal,
+        shippingFee,
+        discountAmount,
+        total,
+        paymentMethod: data.paymentMethod,
+        discountCodeId,
+        notes: data.notes,
+        items: {
+          create: data.items.map((item) => ({
+            productId: item.productId,
+            quantity: item.quantity,
+            unitPrice: productMap.get(item.productId)!.price,
+          })),
+        },
+      },
+      include: { items: { include: { product: true } } },
+    });
+
+    if (discountCodeId) {
+      await tx.discountCode.update({
+        where: { id: discountCodeId },
+        data: { usedCount: { increment: 1 } },
+      });
+    }
+
+    for (const item of data.items) {
+      await tx.product.update({
+        where: { id: item.productId },
+        data: { stock: { decrement: item.quantity } },
+      });
+    }
+
+    return created;
+  });
+
+  let whatsappUrl: string | undefined;
+  let paymentUrl: string | undefined;
+
+  if (data.paymentMethod === 'WHATSAPP') {
+    whatsappUrl = buildWhatsAppUrl({
+      orderNumber: order.orderNumber,
+      items: order.items.map((item) => ({
+        name: item.product.name,
+        quantity: item.quantity,
+        unitPrice: item.unitPrice,
+      })),
+      subtotal: order.subtotal,
+      shippingFee: order.shippingFee,
+      discountAmount: order.discountAmount,
+      total: order.total,
+      customerName: order.customerName,
+      phone: order.phone,
+      address: order.address,
+      city: order.city,
+      state: order.state,
+      postcode: order.postcode,
+    });
+  } else if (data.paymentMethod === 'BILLPLZ') {
+    const settings = await fastify.prisma.setting.findMany({
+      where: { key: { in: ['payment_gateway'] } },
+    });
+    const gatewayName = settings.find(s => s.key === 'payment_gateway')?.value || 'billplz';
+    const gateway = getActiveGateway(gatewayName);
+
+    if (gateway) {
+      const bill = await gateway.createBill({
+        name: order.customerName,
+        email: order.email || undefined,
+        phone: order.phone,
+        amount: order.total,
+        description: `Guaner Order ${order.orderNumber}`,
+        orderNumber: order.orderNumber,
+        orderId: order.id,
+      });
+
+      await fastify.prisma.order.update({
+        where: { id: order.id },
+        data: { paymentRef: bill.billId, paymentGateway: bill.gateway },
+      });
+
+      paymentUrl = bill.paymentUrl;
+    }
+  }
+
+  return { order, whatsappUrl, paymentUrl };
+}
+
+export async function lookupOrders(fastify: FastifyInstance, phone: string) {
+  if (!phone || phone.length < 3) {
+    throw { statusCode: 400, message: 'Please enter a valid phone number' };
+  }
+
+  const orders = await fastify.prisma.order.findMany({
+    where: { phone },
+    include: { items: { include: { product: { select: { name: true, code: true, imageUrl: true } } } } },
+    orderBy: { createdAt: 'desc' },
+    take: 10,
+  });
+
+  return orders;
+}

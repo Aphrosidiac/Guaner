@@ -1,0 +1,74 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Shipping Policy',
+  description: 'GUANER shipping policy. Delivery times, packaging details, and tracking information for all orders.',
+};
+
+export default function ShippingPage() {
+  return (
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <h1 className="font-display text-3xl font-bold mb-2">Shipping Policy</h1>
+      <p className="text-sm text-text-muted mb-10">Last updated: May 2026</p>
+
+      <div className="prose-custom">
+        <h2>Shipping Coverage</h2>
+        <p>
+          GUANER ships to all states across Malaysia, including Sabah and Sarawak. We currently ship domestically within Malaysia only.
+        </p>
+
+        <h2>Shipping Fees</h2>
+        <p>
+          Shipping fees are calculated at checkout based on your location. Free shipping promotions may be available from time to time.
+        </p>
+
+        <h2>Processing Time</h2>
+        <p>
+          Orders are processed within <strong>1-2 business days</strong> after payment confirmation. Orders placed on weekends or public holidays will be processed on the next business day.
+        </p>
+
+        <h2>Delivery Time</h2>
+        <div className="overflow-x-auto -mx-4 px-4">
+        <table>
+          <thead>
+            <tr><th>Region</th><th>Estimated Delivery</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Peninsular Malaysia (Klang Valley)</td><td>1-2 business days</td></tr>
+            <tr><td>Peninsular Malaysia (Other states)</td><td>2-4 business days</td></tr>
+            <tr><td>East Malaysia (Sabah & Sarawak)</td><td>3-7 business days</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <p className="text-sm text-text-muted">
+          Delivery times are estimates and may vary due to courier capacity, weather conditions, or public holidays.
+        </p>
+
+        <h2>Order Tracking</h2>
+        <p>
+          Once your order has been shipped, you will receive tracking information via WhatsApp. You can also track your order anytime using your phone number on our <a href="/track" className="underline">Track Order</a> page.
+        </p>
+
+        <h2>Packaging</h2>
+        <p>
+          All orders are carefully packed to ensure your items arrive in perfect condition.
+        </p>
+
+        <h2>Lost or Damaged Packages</h2>
+        <p>
+          If your package is lost in transit or arrives damaged, please contact us via WhatsApp within <strong>48 hours</strong> of the expected delivery date with your order number and any photos of damaged packaging. We will work with the courier to resolve the issue and arrange a replacement if necessary.
+        </p>
+
+        <h2>Failed Delivery</h2>
+        <p>
+          If delivery fails due to an incorrect address provided by the customer, additional shipping fees may apply for re-delivery. Please double-check your shipping address before completing your order.
+        </p>
+
+        <h2>Contact</h2>
+        <p>
+          For shipping inquiries, contact us via <a href="https://wa.me/601161092723" target="_blank" rel="noopener noreferrer" className="underline">WhatsApp</a>.
+        </p>
+      </div>
+    </div>
+  );
+}
