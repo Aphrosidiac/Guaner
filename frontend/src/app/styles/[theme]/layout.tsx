@@ -19,6 +19,8 @@ export default async function ThemeLayout({
         background: t.bg,
         color: t.text,
         minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
         fontFamily: `${t.bodyFont}, system-ui, sans-serif`,
       }}
     >

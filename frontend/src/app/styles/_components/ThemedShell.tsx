@@ -30,7 +30,7 @@ export function ThemedShell({ children }: { children: React.ReactNode }) {
     return (
       <>
         <VarsityHeader />
-        {children}
+        <main className="flex-1 w-full">{children}</main>
         <VarsityFooter />
       </>
     );
@@ -58,7 +58,7 @@ export function ThemedShell({ children }: { children: React.ReactNode }) {
         </div>
       </header>
 
-      {children}
+      <main className="flex-1 w-full">{children}</main>
 
       <footer style={{ background: t.primary, color: t.primaryText }} className="mt-20">
         <div className="max-w-6xl mx-auto px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-4">
