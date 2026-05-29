@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import { ShoppingCart } from 'lucide-react';
 import { themes, type Theme } from '../themes';
 import { useCart } from '@/lib/cart';
+import { VarsityHeader, VarsityFooter } from './VarsityChrome';
 
 export function useTheme(): Theme {
   const params = useParams();
@@ -23,6 +24,18 @@ export function ThemedShell({ children }: { children: React.ReactNode }) {
     textTransform: t.upper ? 'uppercase' : 'none',
     letterSpacing: t.upper ? '0.05em' : '0',
   };
+
+  // Per-theme bespoke chrome so inner pages match the homepage header/footer.
+  if (t.slug === 'varsity') {
+    return (
+      <>
+        <VarsityHeader />
+        {children}
+        <VarsityFooter />
+      </>
+    );
+  }
+
   return (
     <>
       <header className="sticky top-0 z-40" style={{ background: t.surface, borderBottom: `1px solid ${t.border}` }}>

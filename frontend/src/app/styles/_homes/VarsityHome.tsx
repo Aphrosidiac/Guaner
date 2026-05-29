@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { showcaseFontVars } from '../fonts';
 import { rm } from '../data';
 import { getShowcaseData } from '../api';
+import { VarsityHeader, VarsityFooter } from '../_components/VarsityChrome';
 
 const NAVY = '#1B2A6B';
 const RED = '#E0231C';
@@ -27,28 +28,7 @@ export default async function VarsityMockup() {
   const { products, categories } = await getShowcaseData();
   return (
     <div className={showcaseFontVars} style={{ background: CREAM, color: INK, fontFamily: 'var(--font-inter), system-ui, sans-serif' }}>
-      {/* Announcement */}
-      <div style={{ background: NAVY }} className="text-center text-white text-xs py-2" >
-        <span style={label} className="text-sm">FREE SHIPPING OVER RM150 &nbsp;&#9642;&nbsp; EST. 2026 &nbsp;&#9642;&nbsp; MADE FOR MALAYSIA</span>
-      </div>
-
-      {/* Navbar */}
-      <header className="sticky top-0 z-40" style={{ background: CREAM, borderBottom: `3px solid ${NAVY}` }}>
-        <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-          <Link href="/styles" className="flex items-center gap-3">
-            <img src="/images/logo.png" alt="GUANER" className="h-12 w-auto" />
-          </Link>
-          <nav className="hidden md:flex items-center gap-8 text-lg" style={label}>
-            {['SHOP', 'COLLECTIONS', 'ABOUT', 'TRACK ORDER'].map((l) => (
-              <a key={l} href="/styles/varsity/products" className="hover:text-[color:var(--red)] transition-colors" style={{ ['--red' as string]: RED }}>{l}</a>
-            ))}
-          </nav>
-          <div className="flex items-center gap-4" style={label}>
-            <span className="text-lg">SEARCH</span>
-            <Link href="/styles/varsity/cart" className="text-lg px-3 py-1 rounded-full text-white" style={{ background: RED }}>CART&nbsp;0</Link>
-          </div>
-        </div>
-      </header>
+      <VarsityHeader />
 
       {/* Hero */}
       <section className="relative overflow-hidden" style={{ background: CREAM }}>
@@ -162,22 +142,7 @@ export default async function VarsityMockup() {
         </div>
       </div>
 
-      {/* Footer */}
-      <footer style={{ background: INK }} className="text-white">
-        <div className="max-w-6xl mx-auto px-6 py-12 grid sm:grid-cols-4 gap-8">
-          <div className="sm:col-span-1">
-            <img src="/images/logo.png" alt="GUANER" className="h-14 w-auto mb-3" />
-            <p className="text-sm text-white/50">Quality clothing for the modern individual.</p>
-          </div>
-          {[['SHOP', ['Products', 'Track Order', 'Shipping']], ['SUPPORT', ['FAQ', 'About']], ['LEGAL', ['Terms', 'Privacy']]].map(([h, items]) => (
-            <div key={h as string}>
-              <p style={label} className="text-lg mb-3 text-white/80">{h as string}</p>
-              {(items as string[]).map((it) => <a key={it} href="/styles/varsity/products" className="block text-sm text-white/50 hover:text-white py-1">{it}</a>)}
-            </div>
-          ))}
-        </div>
-        <div className="text-center text-xs text-white/30 pb-8">&copy; 2026 GUANER. All rights reserved.</div>
-      </footer>
+      <VarsityFooter />
 
       <style>{`@keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }`}</style>
     </div>
