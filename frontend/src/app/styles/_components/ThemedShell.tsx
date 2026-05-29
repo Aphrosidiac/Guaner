@@ -40,11 +40,13 @@ export function ThemedShell({ children }: { children: React.ReactNode }) {
 
   if (t.slug === 'formal') {
     const isHome = pathname === '/styles/formal';
+    const isLookbook = pathname === '/styles/formal/lookbook';
+    const overlay = isHome || isLookbook;
     return (
       <>
-        <FormalHeader overlay={isHome} />
-        <main className={isHome ? 'w-full' : 'flex-1 w-full pt-16'}>{children}</main>
-        <FormalFooter />
+        <FormalHeader overlay={overlay} />
+        <main className={overlay ? 'w-full' : 'flex-1 w-full pt-16'}>{children}</main>
+        {!isLookbook && <FormalFooter />}
         <FormalChatBubble />
       </>
     );

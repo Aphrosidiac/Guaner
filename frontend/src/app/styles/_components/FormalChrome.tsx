@@ -50,7 +50,7 @@ const navLeft: [string, string][] = [
   ['NEW DROP SS’26', `${base}/products`],
   ['SHOP', `${base}/products`],
   ['COLLECTIONS', `${base}/products`],
-  ['LOOKBOOK', `${base}/about`],
+  ['LOOKBOOK', `${base}/lookbook`],
   ['NEWS', `${base}/about`],
 ];
 
