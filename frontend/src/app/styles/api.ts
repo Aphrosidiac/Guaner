@@ -76,3 +76,43 @@ export async function getShowcaseData(): Promise<{ products: ShowcaseProduct[]; 
     };
   }
 }
+
+export interface ShowcaseProductFull {
+  id: string;
+  code: string;
+  slug: string;
+  name: string;
+  category: string;
+  priceSen: number; // sen — for cart
+  imageUrl: string | null;
+  size: string | null;
+  description: string | null;
+  stock: number;
+}
+
+export async function getShowcaseProduct(slug: string): Promise<ShowcaseProductFull | null> {
+  try {
+    const res = await fetch(`${API}/api/v1/products/${slug}`, { cache: 'no-store' });
+    if (!res.ok) return null;
+    const p = (await res.json()) as ApiProduct & {
+      id: string;
+      size: string | null;
+      description: string | null;
+      stock: number;
+    };
+    return {
+      id: p.id,
+      code: p.code,
+      slug: p.slug,
+      name: p.name,
+      category: p.category?.name ?? '',
+      priceSen: p.price,
+      imageUrl: p.imageUrl ?? null,
+      size: p.size ?? null,
+      description: p.description ?? null,
+      stock: p.stock ?? 0,
+    };
+  } catch {
+    return null;
+  }
+}
