@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { ShoppingCart } from 'lucide-react';
 import { useCart } from '@/lib/cart';
 
 const NAVY = '#1B2A6B';
@@ -27,10 +26,12 @@ export function VarsityHeader() {
             <Link href={`${base}/products`} className="transition-colors hover:text-[#E0231C]">SHOP</Link>
             <Link href={`${base}/products`} className="transition-colors hover:text-[#E0231C]">COLLECTIONS</Link>
             <Link href={`${base}/about`} className="transition-colors hover:text-[#E0231C]">ABOUT</Link>
+            <Link href={`${base}/products`} className="transition-colors hover:text-[#E0231C]">TRACK ORDER</Link>
           </nav>
-          <Link href={`${base}/cart`} className="inline-flex items-center gap-1.5 text-lg px-3.5 py-1.5 rounded-full text-white" style={{ ...label, background: RED }}>
-            <ShoppingCart className="w-4 h-4" /> {itemCount}
-          </Link>
+          <div className="flex items-center gap-4" style={{ ...label, color: INK }}>
+            <span className="text-lg cursor-pointer hover:text-[#E0231C] transition-colors">SEARCH</span>
+            <Link href={`${base}/cart`} className="text-lg px-3 py-1 rounded-full text-white" style={{ background: RED }}>CART&nbsp;{itemCount}</Link>
+          </div>
         </div>
       </header>
     </>
