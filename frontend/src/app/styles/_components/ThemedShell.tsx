@@ -49,7 +49,7 @@ export function ThemedShell({ children }: { children: React.ReactNode }) {
 
       <footer style={{ background: t.primary, color: t.primaryText }} className="mt-20">
         <div className="max-w-6xl mx-auto px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <img src="/images/logo.png" alt="GUANER" className="h-10 w-auto" style={{ background: '#fff', borderRadius: 8, padding: 4 }} />
+          <img src="/images/logo.png" alt="GUANER" className="h-12 w-auto" />
           <p className="text-sm opacity-70">&copy; 2026 GUANER &mdash; {t.label} demo</p>
           <Link href="/styles" className="text-sm underline opacity-80 hover:opacity-100">&larr; Switch theme</Link>
         </div>

@@ -29,7 +29,7 @@ export default async function StreetwearMockup() {
       <header className="sticky top-0 z-40" style={{ background: BLACK, borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
         <div className="max-w-7xl mx-auto px-5 h-16 flex items-center justify-between">
           <Link href="/styles" className="flex items-center gap-2">
-            <img src="/images/logo.png" alt="GUANER" className="h-10 w-auto bg-white rounded p-0.5" />
+            <img src="/images/logo.png" alt="GUANER" className="h-11 w-auto" />
           </Link>
           <nav className="hidden md:flex items-center gap-7 text-lg" style={label}>
             {['SHOP', 'DROPS', 'ABOUT'].map((l) => <a key={l} href="/styles/streetwear/products" className="hover:text-[#E0231C] transition-colors">{l}</a>)}

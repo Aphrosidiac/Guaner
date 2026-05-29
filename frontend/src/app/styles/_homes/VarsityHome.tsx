@@ -166,7 +166,7 @@ export default async function VarsityMockup() {
       <footer style={{ background: INK }} className="text-white">
         <div className="max-w-6xl mx-auto px-6 py-12 grid sm:grid-cols-4 gap-8">
           <div className="sm:col-span-1">
-            <img src="/images/logo.png" alt="GUANER" className="h-14 w-auto mb-3 bg-white rounded-lg p-1" />
+            <img src="/images/logo.png" alt="GUANER" className="h-14 w-auto mb-3" />
             <p className="text-sm text-white/50">Quality clothing for the modern individual.</p>
           </div>
           {[['SHOP', ['Products', 'Track Order', 'Shipping']], ['SUPPORT', ['FAQ', 'About']], ['LEGAL', ['Terms', 'Privacy']]].map(([h, items]) => (
