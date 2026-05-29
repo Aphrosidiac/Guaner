@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Search, User, ShoppingBag, ChevronDown, MessageCircle, Check } from 'lucide-react';
 import { useCart } from '@/lib/cart';
+import { getSettings } from '@/lib/api';
 
 const base = '/styles/formal';
 const regions: { label: string; cur: string; active: boolean }[] = [
@@ -130,9 +131,13 @@ export function FormalFooter() {
 }
 
 export function FormalChatBubble() {
+  const [num, setNum] = useState('60123456789');
+  useEffect(() => {
+    getSettings().then((s) => { if (s.whatsapp_number) setNum(s.whatsapp_number); }).catch(() => {});
+  }, []);
   return (
     <a
-      href="https://wa.me/60123456789"
+      href={`https://wa.me/${num}`}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with us"

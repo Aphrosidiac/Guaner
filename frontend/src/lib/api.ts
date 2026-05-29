@@ -69,6 +69,23 @@ export const adminGetSettings = (token: string) =>
 export const adminUpdateSettings = (token: string, data: Record<string, string>) =>
   api.put<Record<string, string>>('/api/v1/admin/settings', data, { headers: { Authorization: `Bearer ${token}` } }).then((r) => r.data);
 
+export interface AdminCategory {
+  id: string;
+  name: string;
+  slug: string;
+  description: string | null;
+  sortOrder: number;
+  productCount: number;
+}
+export const adminGetCategories = (token: string) =>
+  api.get<AdminCategory[]>('/api/v1/admin/categories', { headers: { Authorization: `Bearer ${token}` } }).then((r) => r.data);
+export const adminCreateCategory = (token: string, data: Record<string, unknown>) =>
+  api.post('/api/v1/admin/categories', data, { headers: { Authorization: `Bearer ${token}` } }).then((r) => r.data);
+export const adminUpdateCategory = (token: string, id: string, data: Record<string, unknown>) =>
+  api.patch(`/api/v1/admin/categories/${id}`, data, { headers: { Authorization: `Bearer ${token}` } }).then((r) => r.data);
+export const adminDeleteCategory = (token: string, id: string) =>
+  api.delete(`/api/v1/admin/categories/${id}`, { headers: { Authorization: `Bearer ${token}` } }).then((r) => r.data);
+
 export const adminUploadImage = (token: string, file: File) => {
   const form = new FormData();
   form.append('file', file);
