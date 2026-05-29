@@ -44,7 +44,7 @@ export function Navbar() {
     <nav className="sticky top-0 z-50 bg-surface/95 backdrop-blur border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center shrink-0" aria-label="GUANER home">
+          <Link href="/store" className="flex items-center shrink-0" aria-label="GUANER home">
             <img src="/images/logo.png" alt="GUANER" className="h-11 w-auto" />
           </Link>
 

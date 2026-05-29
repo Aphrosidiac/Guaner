@@ -40,12 +40,12 @@ export default async function VarsityMockup() {
           </Link>
           <nav className="hidden md:flex items-center gap-8 text-lg" style={label}>
             {['SHOP', 'COLLECTIONS', 'ABOUT', 'TRACK ORDER'].map((l) => (
-              <a key={l} href="#" className="hover:text-[color:var(--red)] transition-colors" style={{ ['--red' as string]: RED }}>{l}</a>
+              <a key={l} href="/styles/varsity/products" className="hover:text-[color:var(--red)] transition-colors" style={{ ['--red' as string]: RED }}>{l}</a>
             ))}
           </nav>
           <div className="flex items-center gap-4" style={label}>
             <span className="text-lg">SEARCH</span>
-            <span className="text-lg px-3 py-1 rounded-full text-white" style={{ background: RED }}>CART&nbsp;0</span>
+            <Link href="/styles/varsity/cart" className="text-lg px-3 py-1 rounded-full text-white" style={{ background: RED }}>CART&nbsp;0</Link>
           </div>
         </div>
       </header>
@@ -69,7 +69,7 @@ export default async function VarsityMockup() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a href="#shop" className="px-8 py-4 rounded-full text-white text-xl transition-transform hover:scale-[1.03]" style={{ ...label, background: RED }}>SHOP THE DROP &rarr;</a>
-              <a href="#" className="px-8 py-4 rounded-full text-xl transition-colors hover:bg-black/5" style={{ ...label, border: `2px solid ${NAVY}`, color: NAVY }}>LOOKBOOK</a>
+              <a href="/styles/varsity/products" className="px-8 py-4 rounded-full text-xl transition-colors hover:bg-black/5" style={{ ...label, border: `2px solid ${NAVY}`, color: NAVY }}>LOOKBOOK</a>
             </div>
           </div>
           {/* Crest card */}
@@ -107,13 +107,13 @@ export default async function VarsityMockup() {
       <section className="max-w-6xl mx-auto px-6 py-16">
         <div className="flex items-end justify-between mb-8">
           <h2 style={{ ...display, color: NAVY }} className="text-4xl sm:text-5xl uppercase">Shop by category</h2>
-          <a href="#" style={label} className="text-lg" >VIEW ALL &rarr;</a>
+          <a href="/styles/varsity/products" style={label} className="text-lg" >VIEW ALL &rarr;</a>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {categories.map((c, i) => {
             const bg = [NAVY, RED, INK, NAVY][i % 4];
             return (
-              <a key={c.name} href="#" className="group relative rounded-2xl p-6 h-44 flex flex-col justify-between text-white overflow-hidden transition-transform hover:-translate-y-1" style={{ background: bg }}>
+              <a key={c.name} href="/styles/varsity/products" className="group relative rounded-2xl p-6 h-44 flex flex-col justify-between text-white overflow-hidden transition-transform hover:-translate-y-1" style={{ background: bg }}>
                 <span className="absolute -right-3 -top-4 text-8xl opacity-10" style={display}>{String(i + 1).padStart(2, '0')}</span>
                 <span style={label} className="text-2xl">{c.name}</span>
                 <span className="text-sm text-white/70">{c.blurb} &#9642; {c.count} items</span>
@@ -131,7 +131,7 @@ export default async function VarsityMockup() {
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
           {products.map((p, i) => (
-            <div key={p.code} className="group">
+            <Link key={p.code} href={`/styles/varsity/products/${p.slug}`} className="group block">
               <div className="relative rounded-2xl overflow-hidden mb-3" style={{ border: `2px solid ${NAVY}` }}>
                 <div className="aspect-[4/5] flex items-center justify-center relative" style={{ background: i % 2 ? '#fff' : CREAM }}>
                   {p.imageUrl ? (
@@ -148,7 +148,7 @@ export default async function VarsityMockup() {
               <p className="text-xs uppercase tracking-wider" style={{ color: '#7a8095' }}>{p.category}</p>
               <h3 className="font-semibold leading-snug" style={{ color: INK }}>{p.name}</h3>
               <p style={{ ...label, color: RED }} className="text-xl mt-1">{rm(p.price)}</p>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
@@ -172,7 +172,7 @@ export default async function VarsityMockup() {
           {[['SHOP', ['Products', 'Track Order', 'Shipping']], ['SUPPORT', ['FAQ', 'About']], ['LEGAL', ['Terms', 'Privacy']]].map(([h, items]) => (
             <div key={h as string}>
               <p style={label} className="text-lg mb-3 text-white/80">{h as string}</p>
-              {(items as string[]).map((it) => <a key={it} href="#" className="block text-sm text-white/50 hover:text-white py-1">{it}</a>)}
+              {(items as string[]).map((it) => <a key={it} href="/styles/varsity/products" className="block text-sm text-white/50 hover:text-white py-1">{it}</a>)}
             </div>
           ))}
         </div>

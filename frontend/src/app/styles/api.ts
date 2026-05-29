@@ -8,6 +8,7 @@ const API = process.env.NEXT_PUBLIC_API_URL || '';
 
 export interface ShowcaseProduct {
   code: string;
+  slug: string;
   name: string;
   category: string;
   price: number; // RM
@@ -22,6 +23,7 @@ export interface ShowcaseCategory {
 
 interface ApiProduct {
   code: string;
+  slug: string;
   name: string;
   price: number; // sen
   imageUrl: string | null;
@@ -47,6 +49,7 @@ export async function getShowcaseData(): Promise<{ products: ShowcaseProduct[]; 
 
     const products: ShowcaseProduct[] = (pJson.data ?? []).map((p) => ({
       code: p.code,
+      slug: p.slug,
       name: p.name,
       category: p.category?.name ?? '',
       price: Math.round(p.price / 100),
@@ -64,7 +67,11 @@ export async function getShowcaseData(): Promise<{ products: ShowcaseProduct[]; 
   } catch {
     // API down — fall back to static demo data so the page still renders.
     return {
-      products: fallbackProducts.map((p) => ({ ...p, imageUrl: null })),
+      products: fallbackProducts.map((p) => ({
+        ...p,
+        slug: p.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+        imageUrl: null,
+      })),
       categories: fallbackCategories,
     };
   }

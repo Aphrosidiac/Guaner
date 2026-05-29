@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-const directions = [
+const directions: { slug: string; href?: string; name: string; blurb: string; swatches: string[] }[] = [
   {
     slug: 'varsity',
     name: 'Varsity Americana',
@@ -25,6 +25,13 @@ const directions = [
     blurb: 'Faded palette, paper grain, retro serif + script. Nostalgic thrift-shop warmth.',
     swatches: ['#EFE7D6', '#34425A', '#B0432F'],
   },
+  {
+    slug: 'store',
+    href: '/store',
+    name: 'Current Store',
+    blurb: 'The existing build — generic monochrome theme. The starting point before restyling.',
+    swatches: ['#0A0A0A', '#525252', '#FFFFFF'],
+  },
 ];
 
 export default function StylesIndex() {
@@ -44,7 +51,7 @@ export default function StylesIndex() {
           {directions.map((d) => (
             <Link
               key={d.slug}
-              href={`/styles/${d.slug}`}
+              href={d.href ?? `/styles/${d.slug}`}
               className="group rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] hover:border-white/25 transition-all p-6 flex flex-col"
             >
               <div className="flex gap-1.5 mb-5">

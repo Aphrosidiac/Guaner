@@ -28,9 +28,9 @@ export default async function VintageMockup() {
             <img src="/images/logo.png" alt="GUANER" className="h-12 w-auto" />
           </Link>
           <nav className="hidden md:flex items-center gap-8 text-sm uppercase tracking-widest">
-            {['Shop', 'Story', 'Stockists', 'Contact'].map((l) => <a key={l} href="#" className="hover:text-[#B0432F] transition-colors">{l}</a>)}
+            {['Shop', 'Story', 'Stockists', 'Contact'].map((l) => <a key={l} href="/styles/vintage/products" className="hover:text-[#B0432F] transition-colors">{l}</a>)}
           </nav>
-          <a href="#" className="text-sm uppercase tracking-widest hover:text-[#B0432F]">Bag (0)</a>
+          <a href="/styles/vintage/cart" className="text-sm uppercase tracking-widest hover:text-[#B0432F]">Bag (0)</a>
         </div>
       </header>
 
@@ -58,7 +58,7 @@ export default async function VintageMockup() {
         <h2 style={{ ...serif, color: NAVY }} className="text-4xl text-center mb-10">The Departments</h2>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
           {categories.map((c) => (
-            <a key={c.name} href="#" className="group text-center p-6 rounded-sm transition-colors hover:bg-black/[0.03]" style={{ border: `1.5px solid ${BROWN}` }}>
+            <a key={c.name} href="/styles/vintage/products" className="group text-center p-6 rounded-sm transition-colors hover:bg-black/[0.03]" style={{ border: `1.5px solid ${BROWN}` }}>
               <div className="mx-auto mb-4 h-16 w-16 rounded-full flex items-center justify-center text-white" style={{ background: NAVY }}>
                 <span style={serif} className="text-2xl">{c.name[0]}</span>
               </div>
@@ -78,7 +78,7 @@ export default async function VintageMockup() {
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
           {products.map((p) => (
-            <a key={p.code} href="#" className="group">
+            <a key={p.code} href="/styles/vintage/products" className="group">
               <div className="relative p-2 rounded-sm mb-3" style={{ background: '#fff', border: `1.5px solid ${BROWN}`, boxShadow: '3px 3px 0 rgba(107,88,68,0.25)' }}>
                 <div className="aspect-[4/5] flex items-center justify-center rounded-sm overflow-hidden" style={{ background: '#E7DCC6', border: `1px solid ${BROWN}33` }}>
                   {p.imageUrl ? (
@@ -103,7 +103,7 @@ export default async function VintageMockup() {
       <section className="relative py-20 px-8 text-center" style={{ background: NAVY, color: CREAM }}>
         <p style={{ ...script, color: '#E7C9A3' }} className="text-3xl mb-2">our promise</p>
         <h2 style={serif} className="text-4xl sm:text-5xl max-w-2xl mx-auto leading-tight">Made well, once. Worn for a lifetime.</h2>
-        <a href="#" className="inline-block mt-8 px-8 py-3 text-sm uppercase tracking-widest rounded-sm" style={{ background: RUST, color: '#fff' }}>Read our story</a>
+        <a href="/styles/vintage/products" className="inline-block mt-8 px-8 py-3 text-sm uppercase tracking-widest rounded-sm" style={{ background: RUST, color: '#fff' }}>Read our story</a>
       </section>
 
       {/* Footer */}
@@ -116,7 +116,7 @@ export default async function VintageMockup() {
           {[['Shop', ['Products', 'Track Order', 'Shipping']], ['House', ['About', 'FAQ']], ['Legal', ['Terms', 'Privacy']]].map(([h, items]) => (
             <div key={h as string}>
               <p style={serif} className="text-lg mb-3">{h as string}</p>
-              {(items as string[]).map((it) => <a key={it} href="#" className="block text-sm py-1 hover:text-white" style={{ color: '#B9BFC9' }}>{it}</a>)}
+              {(items as string[]).map((it) => <a key={it} href="/styles/vintage/products" className="block text-sm py-1 hover:text-white" style={{ color: '#B9BFC9' }}>{it}</a>)}
             </div>
           ))}
         </div>

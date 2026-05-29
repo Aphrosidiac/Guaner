@@ -32,11 +32,11 @@ export default async function StreetwearMockup() {
             <img src="/images/logo.png" alt="GUANER" className="h-10 w-auto bg-white rounded p-0.5" />
           </Link>
           <nav className="hidden md:flex items-center gap-7 text-lg" style={label}>
-            {['SHOP', 'DROPS', 'ABOUT'].map((l) => <a key={l} href="#" className="hover:text-[#E0231C] transition-colors">{l}</a>)}
+            {['SHOP', 'DROPS', 'ABOUT'].map((l) => <a key={l} href="/styles/streetwear/products" className="hover:text-[#E0231C] transition-colors">{l}</a>)}
           </nav>
           <div className="flex items-center gap-3 text-lg" style={label}>
             <span>SEARCH</span>
-            <span style={{ color: RED }}>CART(0)</span>
+            <Link href="/styles/streetwear/cart" style={{ color: RED }}>CART(0)</Link>
           </div>
         </div>
       </header>
@@ -79,7 +79,7 @@ export default async function StreetwearMockup() {
             const span = spans[i % spans.length];
             const dark = i % 3 === 0;
             return (
-              <a key={p.code} href="#" className={`group relative overflow-hidden rounded-lg ${span}`} style={{ background: dark ? '#161616' : '#101010', border: '1px solid rgba(255,255,255,0.08)' }}>
+              <a key={p.code} href="/styles/streetwear/products" className={`group relative overflow-hidden rounded-lg ${span}`} style={{ background: dark ? '#161616' : '#101010', border: '1px solid rgba(255,255,255,0.08)' }}>
                 {p.imageUrl ? (
                   <img src={p.imageUrl} alt={p.name} className="absolute inset-0 w-full h-full object-cover" />
                 ) : (
@@ -104,7 +104,7 @@ export default async function StreetwearMockup() {
       <section className="relative py-20 px-5 text-center overflow-hidden" style={{ background: RED }}>
         <p style={label} className="text-white/70 text-lg mb-3">DESIGNED IN MALAYSIA &mdash; EST. 2026</p>
         <h2 style={heavy} className="text-5xl sm:text-7xl uppercase leading-none">Wear it<br />into the ground.</h2>
-        <a href="#" className="inline-block mt-8 px-10 py-4 text-xl bg-black text-white transition-transform hover:scale-105" style={label}>BROWSE ALL &rarr;</a>
+        <a href="/styles/streetwear/products" className="inline-block mt-8 px-10 py-4 text-xl bg-black text-white transition-transform hover:scale-105" style={label}>BROWSE ALL &rarr;</a>
       </section>
 
       {/* Footer */}
@@ -118,7 +118,7 @@ export default async function StreetwearMockup() {
             {[['SHOP', ['Products', 'Drops', 'Track']], ['INFO', ['About', 'FAQ', 'Shipping']], ['LEGAL', ['Terms', 'Privacy']]].map(([h, items]) => (
               <div key={h as string}>
                 <p className="text-lg text-white/80 mb-2">{h as string}</p>
-                {(items as string[]).map((it) => <a key={it} href="#" className="block text-sm text-white/40 hover:text-white py-0.5" style={{ fontFamily: 'var(--font-inter)' }}>{it}</a>)}
+                {(items as string[]).map((it) => <a key={it} href="/styles/streetwear/products" className="block text-sm text-white/40 hover:text-white py-0.5" style={{ fontFamily: 'var(--font-inter)' }}>{it}</a>)}
               </div>
             ))}
           </div>

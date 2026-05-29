@@ -21,11 +21,11 @@ export default async function MinimalMockup() {
         <div className="max-w-6xl mx-auto px-8 h-20 flex items-center justify-between">
           <Link href="/styles"><img src="/images/logo.png" alt="GUANER" className="h-9 w-auto" /></Link>
           <nav className="hidden md:flex items-center gap-10 text-xs uppercase" style={caps}>
-            {['Products', 'Collections', 'About'].map((l) => <a key={l} href="#" className="hover:opacity-60 transition-opacity">{l}</a>)}
+            {['Products', 'Collections', 'About'].map((l) => <a key={l} href="/styles/minimal/products" className="hover:opacity-60 transition-opacity">{l}</a>)}
           </nav>
           <div className="flex items-center gap-6 text-xs uppercase" style={caps}>
-            <a href="#" className="hover:opacity-60">Search</a>
-            <a href="#" className="hover:opacity-60">Cart (0)</a>
+            <a href="/styles/minimal/products" className="hover:opacity-60">Search</a>
+            <a href="/styles/minimal/cart" className="hover:opacity-60">Cart (0)</a>
           </div>
         </div>
       </header>
@@ -39,7 +39,7 @@ export default async function MinimalMockup() {
           </h1>
           <div className="mt-10 flex items-center gap-8">
             <a href="#collection" className="text-sm border-b pb-1 transition-colors" style={{ borderColor: INK }}>View the collection</a>
-            <a href="#" className="text-sm pb-1 transition-colors hover:opacity-60" style={{ color: MUTED }}>Our story &rarr;</a>
+            <a href="/styles/minimal/products" className="text-sm pb-1 transition-colors hover:opacity-60" style={{ color: MUTED }}>Our story &rarr;</a>
           </div>
         </div>
         {/* Large editorial image area */}
@@ -62,7 +62,7 @@ export default async function MinimalMockup() {
         <p className="text-xs uppercase mb-8" style={{ ...caps, color: MUTED }}>Categories</p>
         <div>
           {categories.map((c, i) => (
-            <a key={c.name} href="#" className="group flex items-center justify-between py-6 transition-colors" style={{ borderTop: i === 0 ? 'none' : `1px solid ${LINE}` }}>
+            <a key={c.name} href="/styles/minimal/products" className="group flex items-center justify-between py-6 transition-colors" style={{ borderTop: i === 0 ? 'none' : `1px solid ${LINE}` }}>
               <div className="flex items-baseline gap-6">
                 <span className="text-xs tabular-nums" style={{ color: MUTED }}>{String(i + 1).padStart(2, '0')}</span>
                 <span style={serif} className="text-3xl sm:text-4xl font-light group-hover:opacity-60 transition-opacity">{c.name}</span>
@@ -82,11 +82,11 @@ export default async function MinimalMockup() {
       <section id="collection" className="max-w-6xl mx-auto px-8 py-16">
         <div className="flex items-baseline justify-between mb-12">
           <h2 style={serif} className="text-3xl sm:text-4xl font-light">Featured pieces</h2>
-          <a href="#" className="text-xs uppercase" style={{ ...caps, color: MUTED }}>All products &rarr;</a>
+          <a href="/styles/minimal/products" className="text-xs uppercase" style={{ ...caps, color: MUTED }}>All products &rarr;</a>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
           {products.map((p) => (
-            <a key={p.code} href="#" className="group">
+            <a key={p.code} href="/styles/minimal/products" className="group">
               <div className="aspect-[4/5] rounded-sm mb-4 flex items-center justify-center overflow-hidden transition-colors" style={{ background: '#F1EEE7' }}>
                 {p.imageUrl ? (
                   <img src={p.imageUrl} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
@@ -110,7 +110,7 @@ export default async function MinimalMockup() {
       <section className="px-8 py-24 text-center">
         <p className="text-xs uppercase mb-5" style={{ ...caps, color: NAVY }}>Free shipping over RM150</p>
         <h2 style={serif} className="text-4xl sm:text-5xl font-light max-w-2xl mx-auto leading-tight">Fewer, better things — made to be worn for years.</h2>
-        <a href="#" className="inline-block mt-10 text-sm border-b pb-1" style={{ borderColor: INK }}>Browse the collection</a>
+        <a href="/styles/minimal/products" className="inline-block mt-10 text-sm border-b pb-1" style={{ borderColor: INK }}>Browse the collection</a>
       </section>
 
       {/* Footer */}
@@ -123,7 +123,7 @@ export default async function MinimalMockup() {
           {[['Shop', ['Products', 'Track Order', 'Shipping']], ['Support', ['FAQ', 'About']], ['Legal', ['Terms', 'Privacy']]].map(([h, items]) => (
             <div key={h as string}>
               <p className="text-xs uppercase mb-4" style={{ ...caps, color: MUTED }}>{h as string}</p>
-              {(items as string[]).map((it) => <a key={it} href="#" className="block text-sm py-1 hover:opacity-60">{it}</a>)}
+              {(items as string[]).map((it) => <a key={it} href="/styles/minimal/products" className="block text-sm py-1 hover:opacity-60">{it}</a>)}
             </div>
           ))}
         </div>
