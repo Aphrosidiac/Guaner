@@ -19,6 +19,12 @@
   --font-body: var(--font-inter);
 }
 
+html {
+  /* Always reserve the scrollbar gutter so centered/right-aligned chrome
+     (logo, cart) doesn't shift between pages that scroll and ones that don't. */
+  scrollbar-gutter: stable;
+}
+
 body {
   background: var(--color-background);
   color: var(--color-text-primary);

@@ -61,7 +61,7 @@ export function FormalHeader({ overlay = false }: { overlay?: boolean }) {
   const fg = overlay ? '#FFFFFF' : '#111111';
   const wrapStyle: React.CSSProperties = overlay
     ? { position: 'fixed', insetInline: 0, top: 0, zIndex: 50, color: fg, backgroundImage: 'linear-gradient(to bottom, rgba(0,0,0,0.40), rgba(0,0,0,0))' }
-    : { position: 'sticky', top: 0, zIndex: 50, color: fg, background: '#FFFFFF', borderBottom: '1px solid #E2E1DE' };
+    : { position: 'fixed', insetInline: 0, top: 0, zIndex: 50, color: fg, background: '#FFFFFF', borderBottom: '1px solid #E2E1DE' };
   const link = 'text-[11px] tracking-[0.18em] hover:opacity-60 transition-opacity';
   const iconBtn = 'p-1 hover:opacity-60 transition-opacity';
 
