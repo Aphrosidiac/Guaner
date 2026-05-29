@@ -2,6 +2,10 @@
 
 Full-stack e-commerce platform for a clothing brand. Built with Next.js 16, Fastify 5, Prisma 7, and PostgreSQL.
 
+> **Live demo:** https://guaner.apdevotion.my
+>
+> This is currently a **working demo**, not the final site. The root (`/`) redirects to a **design-direction chooser** at `/styles`, where you can preview the store in 4 themes (Varsity, Streetwear, Minimal, Vintage) plus the **current store** at `/store`. Each themed mini-site has a working home → products → product detail (add-to-cart) → cart → about flow, all driven by the live backend. A theme has not been chosen yet; once it is, that system gets promoted store-wide and `/styles` is retired.
+
 ## Tech Stack
 
 - **Frontend**: Next.js 16 (App Router) + Tailwind CSS v4
@@ -13,10 +17,24 @@ Full-stack e-commerce platform for a clothing brand. Built with Next.js 16, Fast
 ## Project Structure
 
 ```
-├── frontend/          Next.js app (port 3000)
-├── backend/           Fastify API (port 3200)
+├── frontend/          Next.js app (dev :3000, prod :3201)
+├── backend/           Fastify API (:3200)
+├── ecosystem.config.js, deploy.sh, deploy/, DEPLOY.md   (VPS deploy tooling)
 └── README.md
 ```
+
+### Routes (demo)
+
+| Path | What |
+|------|------|
+| `/` | Redirects to `/styles` |
+| `/styles` | Design-direction chooser (5 cards) |
+| `/styles/{theme}` | Themed homepage — `varsity` / `streetwear` / `minimal` / `vintage` |
+| `/styles/{theme}/products`, `/products/[slug]`, `/cart`, `/about` | Shared inner pages, restyled per theme via tokens (`styles/themes.ts` + `_components/ThemedShell`) |
+| `/store`, `/products`, `/cart`, `/checkout`, `/about`, `/faq`, … | The current monochrome store (global navbar/footer) |
+| `/admin/*` | Admin panel |
+
+Themed homepages are bespoke (`styles/_homes/*`); the inner pages are **one shared implementation** themed by per-theme tokens.
 
 ## Features
 
@@ -154,26 +172,34 @@ Customer → Checkout (WhatsApp) → Order created in DB
 
 ## Deployment (VPS)
 
+**Live on** `43.134.16.213` (Tencent, user `ubuntu`) at **guaner.apdevotion.my**. This box is **shared** with AscendPeptides + others — only additive changes (separate `guaner` DB, ports 3200/3201, own nginx site). See `DEPLOY.md` for full setup.
+
+**Important — the frontend is built locally and rsync'd, NOT built on the box.** The VPS has only ~1.9 GB RAM, and `next build` there risks OOM-killing the co-hosted apps. `deploy.sh` builds on the box and is fine for a roomier server; for this box use the flow below.
+
 ```bash
-ssh <user>@<server>
-cd /home/<user>/guaner && git pull
+# Backend (light build — runs on the box)
+ssh -i ~/.ssh/guaner_deploy ubuntu@43.134.16.213
+cd /home/ubuntu/guaner && git pull origin master
+cd backend && npm ci && npx prisma migrate deploy && npx prisma generate && npm run build
+pm2 restart guaner-api          # fork mode (bcryptjs)
 
-# Backend
-cd backend && npm install && npx prisma migrate deploy && pm2 restart guaner-api
-
-# Frontend
-cd ../frontend && npm install && npx next build \
-  && cp -r public .next/standalone/public \
-  && cp -r .next/static .next/standalone/.next/static \
-  && pm2 restart guaner-web
+# Frontend (build LOCALLY with prod API url, then rsync the standalone)
+cd frontend
+NEXT_PUBLIC_API_URL=https://guaner.apdevotion.my npm run build
+cp -r public .next/standalone/public && cp -r .next/static .next/standalone/.next/static
+rsync -az --delete -e "ssh -i ~/.ssh/guaner_deploy" \
+  .next/standalone/ ubuntu@43.134.16.213:/home/ubuntu/guaner/frontend/.next/standalone/
+ssh -i ~/.ssh/guaner_deploy ubuntu@43.134.16.213 'pm2 restart guaner-web'
 ```
+
+> `NEXT_PUBLIC_API_URL` is inlined at build time — to change the API origin you must rebuild the frontend, not just restart it. Product images live in `frontend/public/catalog/` and are referenced as `/catalog/...`.
 
 ### PM2 Processes
 
 | Name         | Port | Description       |
 |--------------|------|-------------------|
-| guaner-api   | 3200 | Fastify backend   |
-| guaner-web   | 3000 | Next.js frontend  |
+| guaner-api   | 3200 | Fastify backend (fork mode) |
+| guaner-web   | 3201 | Next.js frontend (standalone) |
 
 ### Nginx
 
