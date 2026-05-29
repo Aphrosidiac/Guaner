@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { showcaseFontVars } from '../fonts';
-import { products, rm } from '../data';
+import { rm } from '../data';
+import { getShowcaseData } from '../api';
 
 const BLACK = '#0A0A0A';
 const RED = '#E0231C';
@@ -20,7 +21,8 @@ function Ticker({ bg, color }: { bg: string; color: string }) {
   );
 }
 
-export default function StreetwearMockup() {
+export default async function StreetwearMockup() {
+  const { products } = await getShowcaseData();
   return (
     <div className={showcaseFontVars} style={{ background: BLACK, color: '#fff', fontFamily: 'var(--font-inter), system-ui, sans-serif' }}>
       {/* Navbar */}
@@ -78,10 +80,14 @@ export default function StreetwearMockup() {
             const dark = i % 3 === 0;
             return (
               <a key={p.code} href="#" className={`group relative overflow-hidden rounded-lg ${span}`} style={{ background: dark ? '#161616' : '#101010', border: '1px solid rgba(255,255,255,0.08)' }}>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span style={heavy} className="text-5xl text-white/10 group-hover:text-white/20 transition-colors">{p.code.split('-')[1]}</span>
-                </div>
-                {p.tag && <span className="absolute top-3 left-3 px-2 py-0.5 text-xs" style={{ ...label, background: RED }}>{p.tag.toUpperCase()}</span>}
+                {p.imageUrl ? (
+                  <img src={p.imageUrl} alt={p.name} className="absolute inset-0 w-full h-full object-cover" />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span style={heavy} className="text-5xl text-white/10 group-hover:text-white/20 transition-colors">{p.code.split('-')[1]}</span>
+                  </div>
+                )}
+                {p.tag && <span className="absolute top-3 left-3 z-10 px-2 py-0.5 text-xs" style={{ ...label, background: RED }}>{p.tag.toUpperCase()}</span>}
                 <div className="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
                   <p className="text-[11px] uppercase tracking-widest text-white/40">{p.category}</p>
                   <h3 className="font-semibold leading-tight">{p.name}</h3>

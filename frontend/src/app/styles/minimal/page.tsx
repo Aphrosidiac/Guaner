@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { showcaseFontVars } from '../fonts';
-import { products, categories, rm } from '../data';
+import { rm } from '../data';
+import { getShowcaseData } from '../api';
 
 const PAPER = '#FBFAF8';
 const INK = '#1A1A1A';
@@ -11,7 +12,8 @@ const MUTED = '#8A857C';
 const serif = { fontFamily: 'var(--font-fraunces)' } as const;
 const caps = { letterSpacing: '0.22em' } as const;
 
-export default function MinimalMockup() {
+export default async function MinimalMockup() {
+  const { products, categories } = await getShowcaseData();
   return (
     <div className={showcaseFontVars} style={{ background: PAPER, color: INK, fontFamily: 'var(--font-inter), system-ui, sans-serif' }}>
       {/* Navbar */}
@@ -42,8 +44,12 @@ export default function MinimalMockup() {
         </div>
         {/* Large editorial image area */}
         <div className="relative">
-          <div className="aspect-[4/5] rounded-sm flex items-center justify-center" style={{ background: '#F1EEE7', border: `1px solid ${LINE}` }}>
-            <span style={{ ...serif, color: '#D8D3C8' }} className="text-7xl">GUANER</span>
+          <div className="aspect-[4/5] rounded-sm overflow-hidden flex items-center justify-center" style={{ background: '#F1EEE7', border: `1px solid ${LINE}` }}>
+            {products[0]?.imageUrl ? (
+              <img src={products[0].imageUrl} alt="GUANER" className="w-full h-full object-cover" />
+            ) : (
+              <span style={{ ...serif, color: '#D8D3C8' }} className="text-7xl">GUANER</span>
+            )}
           </div>
           <p className="absolute -bottom-6 left-0 text-xs uppercase" style={{ ...caps, color: MUTED }}>Spring / Summer 26</p>
         </div>
@@ -82,7 +88,11 @@ export default function MinimalMockup() {
           {products.map((p) => (
             <a key={p.code} href="#" className="group">
               <div className="aspect-[4/5] rounded-sm mb-4 flex items-center justify-center overflow-hidden transition-colors" style={{ background: '#F1EEE7' }}>
-                <span style={{ ...serif, color: '#D8D3C8' }} className="text-2xl group-hover:scale-105 transition-transform">{p.code}</span>
+                {p.imageUrl ? (
+                  <img src={p.imageUrl} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+                ) : (
+                  <span style={{ ...serif, color: '#D8D3C8' }} className="text-2xl group-hover:scale-105 transition-transform">{p.code}</span>
+                )}
               </div>
               <div className="flex items-start justify-between gap-2">
                 <div>

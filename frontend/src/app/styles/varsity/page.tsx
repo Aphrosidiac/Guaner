@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { showcaseFontVars } from '../fonts';
-import { products, categories, rm } from '../data';
+import { rm } from '../data';
+import { getShowcaseData } from '../api';
 
 const NAVY = '#1B2A6B';
 const RED = '#E0231C';
@@ -22,7 +23,8 @@ function StripeRule() {
   );
 }
 
-export default function VarsityMockup() {
+export default async function VarsityMockup() {
+  const { products, categories } = await getShowcaseData();
   return (
     <div className={showcaseFontVars} style={{ background: CREAM, color: INK, fontFamily: 'var(--font-inter), system-ui, sans-serif' }}>
       {/* Announcement */}
@@ -132,10 +134,16 @@ export default function VarsityMockup() {
             <div key={p.code} className="group">
               <div className="relative rounded-2xl overflow-hidden mb-3" style={{ border: `2px solid ${NAVY}` }}>
                 <div className="aspect-[4/5] flex items-center justify-center relative" style={{ background: i % 2 ? '#fff' : CREAM }}>
-                  <div className="absolute inset-0 opacity-[0.06]" style={{ backgroundImage: `repeating-linear-gradient(45deg, ${NAVY} 0 2px, transparent 2px 22px)` }} />
-                  <span style={{ ...display, color: NAVY }} className="text-3xl opacity-80">{p.code}</span>
+                  {p.imageUrl ? (
+                    <img src={p.imageUrl} alt={p.name} className="absolute inset-0 w-full h-full object-cover" />
+                  ) : (
+                    <>
+                      <div className="absolute inset-0 opacity-[0.06]" style={{ backgroundImage: `repeating-linear-gradient(45deg, ${NAVY} 0 2px, transparent 2px 22px)` }} />
+                      <span style={{ ...display, color: NAVY }} className="text-3xl opacity-80">{p.code}</span>
+                    </>
+                  )}
                 </div>
-                {p.tag && <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-white text-sm" style={{ ...label, background: RED }}>{p.tag.toUpperCase()}</span>}
+                {p.tag && <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-white text-sm z-10" style={{ ...label, background: RED }}>{p.tag.toUpperCase()}</span>}
               </div>
               <p className="text-xs uppercase tracking-wider" style={{ color: '#7a8095' }}>{p.category}</p>
               <h3 className="font-semibold leading-snug" style={{ color: INK }}>{p.name}</h3>

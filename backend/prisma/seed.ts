@@ -38,20 +38,20 @@ async function main() {
   const [teesCat, hoodiesCat, pantsCat, capsCat] = categories;
 
   const products = [
-    { code: 'GN-TS001', name: 'Essential Oversized Tee', slug: 'essential-oversized-tee', categoryId: teesCat.id, size: 'S-XL', price: 8900, stock: 200, description: 'Premium heavyweight cotton oversized tee. Relaxed drop-shoulder fit. 250gsm.', featured: true },
-    { code: 'GN-TS002', name: 'Logo Print Tee', slug: 'logo-print-tee', categoryId: teesCat.id, size: 'S-XL', price: 7900, stock: 150, description: 'Classic fit tee with Guaner logo print. 200gsm cotton.', featured: true },
-    { code: 'GN-TS003', name: 'Washed Vintage Tee', slug: 'washed-vintage-tee', categoryId: teesCat.id, size: 'S-XL', price: 9500, stock: 100, description: 'Acid-washed vintage finish tee. Relaxed fit with raw hem.', featured: false },
-    { code: 'GN-HD001', name: 'Heavyweight Hoodie', slug: 'heavyweight-hoodie', categoryId: hoodiesCat.id, size: 'S-XL', price: 15900, stock: 120, description: 'Premium heavyweight fleece hoodie. Kangaroo pocket, ribbed cuffs. 380gsm.', featured: true },
-    { code: 'GN-HD002', name: 'Zip-Up Hoodie', slug: 'zip-up-hoodie', categoryId: hoodiesCat.id, size: 'S-XL', price: 16900, stock: 80, description: 'Full zip hoodie with metal hardware. Split kangaroo pocket.', featured: false },
-    { code: 'GN-PT001', name: 'Relaxed Cargo Pants', slug: 'relaxed-cargo-pants', categoryId: pantsCat.id, size: 'S-XL', price: 12900, stock: 100, description: 'Wide-leg cargo pants with utility pockets. Adjustable waist. Cotton twill.', featured: false },
-    { code: 'GN-PT002', name: 'Essential Joggers', slug: 'essential-joggers', categoryId: pantsCat.id, size: 'S-XL', price: 10900, stock: 120, description: 'Tapered joggers with elastic cuff. French terry 320gsm.', featured: true },
-    { code: 'GN-CP001', name: 'Embroidered Cap', slug: 'embroidered-cap', categoryId: capsCat.id, size: 'One Size', price: 4900, stock: 200, description: 'Structured 6-panel cap with Guaner embroidered logo. Adjustable strap.', featured: false },
+    { code: 'GN-TS001', name: 'Essential Oversized Tee', slug: 'essential-oversized-tee', categoryId: teesCat.id, size: 'S-XL', price: 8900, stock: 200, description: 'Premium heavyweight cotton oversized tee. Relaxed drop-shoulder fit. 250gsm.', featured: true, imageUrl: '/catalog/guaner-shirt-black-front-10.jpeg' },
+    { code: 'GN-TS002', name: 'Logo Print Tee', slug: 'logo-print-tee', categoryId: teesCat.id, size: 'S-XL', price: 7900, stock: 150, description: 'Classic fit tee with Guaner logo print. 200gsm cotton.', featured: true, imageUrl: '/catalog/guaner-shirt-black-model-04.jpeg' },
+    { code: 'GN-TS003', name: 'Washed Vintage Tee', slug: 'washed-vintage-tee', categoryId: teesCat.id, size: 'S-XL', price: 9500, stock: 100, description: 'Acid-washed vintage finish tee. Relaxed fit with raw hem.', featured: false, imageUrl: '/catalog/guaner-tee-black-flatlay-07.jpeg' },
+    { code: 'GN-HD001', name: 'Heavyweight Hoodie', slug: 'heavyweight-hoodie', categoryId: hoodiesCat.id, size: 'S-XL', price: 15900, stock: 120, description: 'Premium heavyweight fleece hoodie. Kangaroo pocket, ribbed cuffs. 380gsm.', featured: true, imageUrl: '/catalog/guaner-design-basic-sweatshirt-01.jpeg' },
+    { code: 'GN-HD002', name: 'Zip-Up Hoodie', slug: 'zip-up-hoodie', categoryId: hoodiesCat.id, size: 'S-XL', price: 16900, stock: 80, description: 'Full zip hoodie with metal hardware. Split kangaroo pocket.', featured: false, imageUrl: '/catalog/guaner-design-fwgmt-sweatshirt-02.jpeg' },
+    { code: 'GN-PT001', name: 'Relaxed Cargo Pants', slug: 'relaxed-cargo-pants', categoryId: pantsCat.id, size: 'S-XL', price: 12900, stock: 100, description: 'Wide-leg cargo pants with utility pockets. Adjustable waist. Cotton twill.', featured: false, imageUrl: '/catalog/guaner-shirt-black-back-model-19.jpeg' },
+    { code: 'GN-PT002', name: 'Essential Joggers', slug: 'essential-joggers', categoryId: pantsCat.id, size: 'S-XL', price: 10900, stock: 120, description: 'Tapered joggers with elastic cuff. French terry 320gsm.', featured: true, imageUrl: '/catalog/guaner-shirt-black-model-12.jpeg' },
+    { code: 'GN-CP001', name: 'Embroidered Cap', slug: 'embroidered-cap', categoryId: capsCat.id, size: 'One Size', price: 4900, stock: 200, description: 'Structured 6-panel cap with Guaner embroidered logo. Adjustable strap.', featured: false, imageUrl: '/catalog/guaner-shirt-black-model-08.jpeg' },
   ];
 
   for (const product of products) {
     await prisma.product.upsert({
       where: { code: product.code },
-      update: {},
+      update: { imageUrl: product.imageUrl },
       create: product,
     });
   }

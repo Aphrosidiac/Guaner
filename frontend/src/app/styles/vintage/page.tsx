@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { showcaseFontVars } from '../fonts';
-import { products, categories, rm } from '../data';
+import { rm } from '../data';
+import { getShowcaseData } from '../api';
 
 const CREAM = '#EFE7D6';
 const NAVY = '#34425A';
@@ -13,7 +14,8 @@ const script = { fontFamily: 'var(--font-caveat)' } as const;
 // subtle paper grain as an inline SVG data URI
 const GRAIN = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E\")";
 
-export default function VintageMockup() {
+export default async function VintageMockup() {
+  const { products, categories } = await getShowcaseData();
   return (
     <div className={showcaseFontVars} style={{ background: CREAM, color: BROWN, fontFamily: 'var(--font-inter), system-ui, sans-serif', position: 'relative' }}>
       {/* grain overlay */}
@@ -78,8 +80,12 @@ export default function VintageMockup() {
           {products.map((p) => (
             <a key={p.code} href="#" className="group">
               <div className="relative p-2 rounded-sm mb-3" style={{ background: '#fff', border: `1.5px solid ${BROWN}`, boxShadow: '3px 3px 0 rgba(107,88,68,0.25)' }}>
-                <div className="aspect-[4/5] flex items-center justify-center rounded-sm" style={{ background: '#E7DCC6', border: `1px solid ${BROWN}33` }}>
-                  <span style={{ ...serif, color: NAVY }} className="text-2xl opacity-70 group-hover:opacity-100 transition-opacity">{p.code}</span>
+                <div className="aspect-[4/5] flex items-center justify-center rounded-sm overflow-hidden" style={{ background: '#E7DCC6', border: `1px solid ${BROWN}33` }}>
+                  {p.imageUrl ? (
+                    <img src={p.imageUrl} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform" style={{ filter: 'sepia(0.15) saturate(0.95)' }} />
+                  ) : (
+                    <span style={{ ...serif, color: NAVY }} className="text-2xl opacity-70 group-hover:opacity-100 transition-opacity">{p.code}</span>
+                  )}
                 </div>
                 {p.tag && <span className="absolute -top-2 -right-2 px-2 py-0.5 text-[10px] uppercase tracking-wider text-white rounded-sm rotate-3" style={{ background: RUST }}>{p.tag}</span>}
               </div>
