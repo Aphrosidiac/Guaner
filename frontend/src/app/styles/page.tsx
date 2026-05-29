@@ -44,9 +44,17 @@ export default function StylesIndex() {
   return (
     <div style={{ minHeight: '100vh', background: '#0E0E10', color: '#fff' }} className="font-body">
       <div className="max-w-5xl mx-auto px-6 py-16">
-        <div className="flex items-center gap-3 mb-2">
-          <img src="/images/logo.png" alt="GUANER" className="h-12 w-auto rounded" />
-          <span className="text-xs uppercase tracking-[0.3em] text-white/40">Design Directions</span>
+        <div className="flex items-center justify-between gap-3 mb-2">
+          <div className="flex items-center gap-3">
+            <img src="/images/logo.png" alt="GUANER" className="h-12 w-auto rounded" />
+            <span className="text-xs uppercase tracking-[0.3em] text-white/40">Design Directions</span>
+          </div>
+          <Link
+            href="/admin"
+            className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] hover:bg-white/[0.1] hover:border-white/30 transition-all px-4 py-2 text-xs uppercase tracking-[0.2em] text-white/80 hover:text-white"
+          >
+            Admin <span aria-hidden>&rarr;</span>
+          </Link>
         </div>
         <h1 className="text-3xl sm:text-4xl font-bold mb-3">Pick a direction</h1>
         <p className="text-white/50 max-w-xl mb-12">
