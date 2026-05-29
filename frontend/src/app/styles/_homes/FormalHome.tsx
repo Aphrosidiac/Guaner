@@ -4,9 +4,9 @@ import { ArrowRight } from 'lucide-react';
 // Editorial scroll: full-bleed image sections stacked one after another.
 // Header + chat bubble + footer come from ThemedShell.
 const SECTIONS = [
-  { img: '/catalog/guaner-shirt-black-model-06.jpeg', pos: 'center 28%', hero: true },
-  { img: '/catalog/guaner-shirt-black-front-back-model-22.jpeg', pos: 'center 22%', hero: false },
-  { img: '/catalog/guaner-shirt-black-model-20.jpeg', pos: 'center 30%', hero: false },
+  { img: '/catalog/guaner-shirt-black-back-model-19.jpeg', pos: 'center 48%', hero: true },
+  { img: '/catalog/guaner-shirt-black-front-10.jpeg', pos: 'center 62%', hero: false },
+  { img: '/catalog/guaner-shirt-black-flatlay-15.jpeg', pos: 'center 48%', hero: false },
 ];
 
 export default function FormalHome() {
