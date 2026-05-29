@@ -44,7 +44,7 @@ export function ThemedShell({ children }: { children: React.ReactNode }) {
       <>
         <FormalHeader overlay={isHome} />
         <main className={isHome ? 'w-full' : 'flex-1 w-full pt-16'}>{children}</main>
-        {!isHome && <FormalFooter />}
+        <FormalFooter />
         <FormalChatBubble />
       </>
     );

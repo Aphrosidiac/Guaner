@@ -1,10 +1,51 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
-import { Search, User, ShoppingBag, ChevronDown, MessageCircle } from 'lucide-react';
+import { Search, User, ShoppingBag, ChevronDown, MessageCircle, Check } from 'lucide-react';
 import { useCart } from '@/lib/cart';
 
 const base = '/styles/formal';
+const regions: { label: string; cur: string; active: boolean }[] = [
+  { label: 'Malaysia', cur: 'MYR RM', active: true },
+  { label: 'Singapore', cur: 'SGD', active: false },
+  { label: 'Worldwide', cur: 'USD', active: false },
+];
+
+function RegionSelect() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="relative hidden md:block" style={{ fontFamily: 'var(--font-outfit)' }}>
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="text-[11px] tracking-[0.14em] inline-flex items-center gap-1 hover:opacity-70 transition-opacity cursor-pointer"
+      >
+        MALAYSIA | MYR RM <ChevronDown className={`w-3 h-3 transition-transform ${open ? 'rotate-180' : ''}`} />
+      </button>
+      {open && (
+        <>
+          <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
+          <div className="liquid-glass-dark absolute right-0 top-full mt-3 z-50 w-60 p-2" style={{ borderRadius: 16, position: 'absolute' }}>
+            {regions.map((r) => (
+              <button
+                key={r.label}
+                disabled={!r.active}
+                onClick={() => setOpen(false)}
+                className={`relative w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left ${r.active ? 'hover:bg-white/10' : 'opacity-45 cursor-not-allowed'} transition-colors`}
+              >
+                <span className="text-[12px] tracking-[0.12em]">{r.label}</span>
+                <span className="flex items-center gap-2 text-[11px] tracking-[0.1em] text-white/70">
+                  {r.cur}
+                  {r.active ? <Check className="w-3.5 h-3.5 text-white" /> : <span className="text-[9px] uppercase">Soon</span>}
+                </span>
+              </button>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
 const navLeft: [string, string][] = [
   ['NEW DROP SS’26', `${base}/products`],
   ['SHOP', `${base}/products`],
@@ -45,9 +86,7 @@ export function FormalHeader({ overlay = false }: { overlay?: boolean }) {
 
         {/* right utility */}
         <div className="flex items-center gap-4 ml-auto" style={{ color: fg }}>
-          <span className="hidden md:inline text-[11px] tracking-[0.14em] inline-flex items-center gap-1" style={{ fontFamily: 'var(--font-outfit)' }}>
-            MALAYSIA | MYR RM <ChevronDown className="w-3 h-3" />
-          </span>
+          <RegionSelect />
           <Link href={`${base}/products`} aria-label="Search" className={iconBtn}><Search className="w-5 h-5" /></Link>
           <Link href="/track" aria-label="Track order" className={iconBtn}><User className="w-5 h-5" /></Link>
           <Link href={`${base}/cart`} aria-label="Cart" className={`${iconBtn} relative`}>
