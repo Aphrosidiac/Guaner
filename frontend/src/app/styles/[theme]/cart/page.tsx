@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { Trash2 } from 'lucide-react';
 import { ThemedShell, useTheme } from '../../_components/ThemedShell';
+import { Animate, Stagger } from '@/components/ui/Animate';
 import { useCart } from '@/lib/cart';
 import { formatPrice } from '@/lib/utils';
 
@@ -22,7 +23,7 @@ export default function ThemedCart() {
   return (
     <ThemedShell>
       <section className="max-w-3xl mx-auto px-6 py-12">
-        <h1 className="text-4xl mb-8" style={heading}>Your Cart</h1>
+        <Animate variant="fadeUp"><h1 className="text-4xl mb-8" style={heading}>Your Cart</h1></Animate>
         {items.length === 0 ? (
           <div className="text-center py-16">
             <p className="mb-6" style={{ color: t.textMuted }}>Your cart is empty.</p>
@@ -30,7 +31,7 @@ export default function ThemedCart() {
           </div>
         ) : (
           <>
-            <div className="space-y-4">
+            <Stagger className="space-y-4" stagger={0.08}>
               {items.map((it) => (
                 <div key={it.productId} className="flex items-center gap-4 p-3" style={{ background: t.surface, border: `1px solid ${t.border}`, borderRadius: t.radius }}>
                   <div className="w-16 h-20 shrink-0 overflow-hidden flex items-center justify-center" style={{ background: t.surfaceAlt, borderRadius: t.radius }}>
@@ -52,12 +53,12 @@ export default function ThemedCart() {
                   <button onClick={() => removeItem(it.productId)} className="p-2 cursor-pointer" style={{ color: t.textMuted }} aria-label="Remove"><Trash2 className="w-4 h-4" /></button>
                 </div>
               ))}
-            </div>
+            </Stagger>
             <div className="mt-8 flex items-center justify-between">
               <span className="text-lg" style={{ color: t.textMuted }}>Total</span>
               <span className="text-2xl font-bold" style={{ fontFamily: t.displayFont, color: t.accent }}>{formatPrice(total)}</span>
             </div>
-            <Link href="/checkout" className="mt-6 block text-center px-6 py-4 font-semibold" style={cta}>Proceed to checkout</Link>
+            <Link href="/checkout" className="mt-6 block text-center px-6 py-4 font-semibold transition-transform active:scale-[0.98] hover:brightness-110" style={cta}>Proceed to checkout</Link>
             <p className="mt-3 text-center text-xs" style={{ color: t.textMuted }}>Checkout uses the shared store flow.</p>
           </>
         )}

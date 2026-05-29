@@ -20,17 +20,16 @@ export function VarsityHeader() {
       <header className="sticky top-0 z-40" style={{ background: CREAM, borderBottom: `3px solid ${NAVY}` }}>
         <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
           <Link href={base} className="flex items-center gap-3">
-            <img src="/images/logo.png" alt="GUANER" className="h-12 w-auto" />
+            <img src="/images/logo.png" alt="GUANER" className="h-12 w-auto transition-transform duration-300 hover:scale-105" />
           </Link>
           <nav className="hidden md:flex items-center gap-8 text-lg" style={{ ...label, color: INK }}>
-            <Link href={`${base}/products`} className="transition-colors hover:text-[#E0231C]">SHOP</Link>
-            <Link href={`${base}/products`} className="transition-colors hover:text-[#E0231C]">COLLECTIONS</Link>
-            <Link href={`${base}/about`} className="transition-colors hover:text-[#E0231C]">ABOUT</Link>
-            <Link href={`${base}/products`} className="transition-colors hover:text-[#E0231C]">TRACK ORDER</Link>
+            {([['SHOP', `${base}/products`], ['COLLECTIONS', `${base}/products`], ['ABOUT', `${base}/about`], ['TRACK ORDER', `${base}/products`]] as [string, string][]).map(([l, href]) => (
+              <Link key={l} href={href} className="relative transition-colors hover:text-[#E0231C] after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-full after:bg-[#E0231C] after:origin-left after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300">{l}</Link>
+            ))}
           </nav>
           <div className="flex items-center gap-4" style={{ ...label, color: INK }}>
             <span className="text-lg cursor-pointer hover:text-[#E0231C] transition-colors">SEARCH</span>
-            <Link href={`${base}/cart`} className="text-lg px-3 py-1 rounded-full text-white" style={{ background: RED }}>CART&nbsp;{itemCount}</Link>
+            <Link href={`${base}/cart`} className="text-lg px-3 py-1 rounded-full text-white transition-transform active:scale-95 hover:brightness-110" style={{ background: RED }}>CART&nbsp;{itemCount}</Link>
           </div>
         </div>
       </header>
@@ -48,7 +47,7 @@ export function VarsityFooter() {
     <footer style={{ background: INK }} className="text-white mt-16">
       <div className="max-w-6xl mx-auto px-6 py-12 grid sm:grid-cols-4 gap-8">
         <div className="sm:col-span-1">
-          <img src="/images/logo.png" alt="GUANER" className="h-14 w-auto mb-3" />
+          <img src="/images/logo.png" alt="GUANER" className="h-14 w-auto mb-3 transition-transform duration-300 hover:scale-105" />
           <p className="text-sm text-white/50">Quality clothing for the modern individual.</p>
           <Link href="/styles" className="inline-block mt-4 text-sm text-white/60 underline hover:text-white">&larr; All themes</Link>
         </div>

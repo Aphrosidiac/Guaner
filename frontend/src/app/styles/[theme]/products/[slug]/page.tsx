@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { ArrowLeft, Check, ShoppingCart } from 'lucide-react';
 import { ThemedShell, useTheme } from '../../../_components/ThemedShell';
+import { Animate } from '@/components/ui/Animate';
 import { getProduct } from '@/lib/api';
 import { formatPrice } from '@/lib/utils';
 import { useCart } from '@/lib/cart';
@@ -64,16 +65,18 @@ export default function ThemedDetail() {
           <p>Product not found. <Link href={`${base}/products`} className="underline">Back to shop</Link></p>
         ) : (
           <div className="grid md:grid-cols-2 gap-10">
-            <div className="overflow-hidden" style={{ background: t.surfaceAlt, borderRadius: t.radius, border: `1px solid ${t.border}` }}>
-              <div className="aspect-[4/5] flex items-center justify-center">
-                {product.imageUrl ? (
-                  <img src={product.imageUrl} alt={product.name} className="w-full h-full object-cover" />
-                ) : (
-                  <span className="text-4xl" style={{ fontFamily: t.displayFont, color: t.textMuted }}>{product.code}</span>
-                )}
+            <Animate variant="fade" duration={0.6} className="group overflow-hidden" >
+              <div className="overflow-hidden h-full" style={{ background: t.surfaceAlt, borderRadius: t.radius, border: `1px solid ${t.border}` }}>
+                <div className="aspect-[4/5] flex items-center justify-center">
+                  {product.imageUrl ? (
+                    <img src={product.imageUrl} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  ) : (
+                    <span className="text-4xl" style={{ fontFamily: t.displayFont, color: t.textMuted }}>{product.code}</span>
+                  )}
+                </div>
               </div>
-            </div>
-            <div>
+            </Animate>
+            <Animate variant="fadeUp" delay={0.12} duration={0.6}>
               <p className="text-xs uppercase tracking-widest mb-2" style={{ color: t.textMuted }}>{product.category.name}</p>
               <h1 className="text-4xl sm:text-5xl leading-tight" style={heading}>{product.name}</h1>
               {product.size && <p className="mt-2" style={{ color: t.textMuted }}>{product.size}</p>}
@@ -85,13 +88,13 @@ export default function ThemedDetail() {
                   <span className="px-4 min-w-[2.5rem] text-center">{qty}</span>
                   <button onClick={() => setQty(qty + 1)} className="px-3 py-2 cursor-pointer">+</button>
                 </div>
-                <button onClick={add} disabled={product.stock === 0} className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold cursor-pointer disabled:opacity-50" style={btn}>
+                <button onClick={add} disabled={product.stock === 0} className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold cursor-pointer disabled:opacity-50 transition-transform active:scale-[0.97] hover:brightness-110" style={btn}>
                   {added ? (<><Check className="w-4 h-4" /> Added</>) : (<><ShoppingCart className="w-4 h-4" /> Add to cart</>)}
                 </button>
               </div>
               {product.stock === 0 && <p className="mt-3 text-sm" style={{ color: t.accent }}>Out of stock</p>}
               <p className="mt-6 text-xs" style={{ color: t.textMuted }}>Code: {product.code}</p>
-            </div>
+            </Animate>
           </div>
         )}
       </section>
