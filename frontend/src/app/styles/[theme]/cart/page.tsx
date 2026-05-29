@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { Trash2 } from 'lucide-react';
-import { ThemedShell, useTheme } from '../../_components/ThemedShell';
+import { useTheme } from '../../_components/ThemedShell';
 import { Animate, Stagger } from '@/components/ui/Animate';
 import { useCart } from '@/lib/cart';
 import { formatPrice } from '@/lib/utils';
@@ -21,8 +21,7 @@ export default function ThemedCart() {
   };
 
   return (
-    <ThemedShell>
-      <section className="max-w-3xl mx-auto px-6 py-12">
+    <section className="max-w-3xl mx-auto px-6 py-12">
         <Animate variant="fadeUp"><h1 className="text-4xl mb-8" style={heading}>Your Cart</h1></Animate>
         {items.length === 0 ? (
           <div className="text-center py-16">
@@ -62,7 +61,6 @@ export default function ThemedCart() {
             <p className="mt-3 text-center text-xs" style={{ color: t.textMuted }}>Checkout uses the shared store flow.</p>
           </>
         )}
-      </section>
-    </ThemedShell>
+    </section>
   );
 }

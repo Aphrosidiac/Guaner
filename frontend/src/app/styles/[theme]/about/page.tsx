@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ThemedShell, useTheme } from '../../_components/ThemedShell';
+import { useTheme } from '../../_components/ThemedShell';
 import { Animate } from '@/components/ui/Animate';
 
 export default function ThemedAbout() {
@@ -10,8 +10,7 @@ export default function ThemedAbout() {
   const heading: React.CSSProperties = { fontFamily: t.displayFont, textTransform: t.upper ? 'uppercase' : 'none' };
 
   return (
-    <ThemedShell>
-      <section className="max-w-3xl mx-auto px-6 py-16">
+    <section className="max-w-3xl mx-auto px-6 py-16">
         <Animate variant="fadeUp"><p className="text-xs uppercase tracking-[0.3em] mb-4" style={{ color: t.accent }}>About</p></Animate>
         <Animate variant="fadeUp" delay={0.1}><h1 className="text-4xl sm:text-5xl mb-6 leading-tight" style={heading}>Quality clothing, built to last.</h1></Animate>
         <Animate variant="fadeUp" delay={0.2}>
@@ -29,7 +28,6 @@ export default function ThemedAbout() {
             Browse the shop
           </Link>
         </Animate>
-      </section>
-    </ThemedShell>
+    </section>
   );
 }

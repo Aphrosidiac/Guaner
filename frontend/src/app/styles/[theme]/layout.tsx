@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { showcaseFontVars } from '../fonts';
 import { themes } from '../themes';
+import { ThemedShell } from '../_components/ThemedShell';
 
 export default async function ThemeLayout({
   children,
@@ -24,7 +25,7 @@ export default async function ThemeLayout({
         fontFamily: `${t.bodyFont}, system-ui, sans-serif`,
       }}
     >
-      {children}
+      <ThemedShell>{children}</ThemedShell>
     </div>
   );
 }

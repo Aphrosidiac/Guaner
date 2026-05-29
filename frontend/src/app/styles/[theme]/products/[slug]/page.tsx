@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { ArrowLeft, Check, ShoppingCart } from 'lucide-react';
-import { ThemedShell, useTheme } from '../../../_components/ThemedShell';
+import { useTheme } from '../../../_components/ThemedShell';
 import { Animate } from '@/components/ui/Animate';
 import { getProduct } from '@/lib/api';
 import { formatPrice } from '@/lib/utils';
@@ -54,8 +54,7 @@ export default function ThemedDetail() {
   };
 
   return (
-    <ThemedShell>
-      <section className="max-w-5xl mx-auto px-6 py-10">
+    <section className="max-w-5xl mx-auto px-6 py-10">
         <Link href={`${base}/products`} className="inline-flex items-center gap-1 text-sm mb-8" style={{ color: t.textMuted }}>
           <ArrowLeft className="w-4 h-4" /> Back to shop
         </Link>
@@ -97,7 +96,6 @@ export default function ThemedDetail() {
             </Animate>
           </div>
         )}
-      </section>
-    </ThemedShell>
+    </section>
   );
 }

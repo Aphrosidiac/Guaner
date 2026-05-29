@@ -1,8 +1,6 @@
 import Link from 'next/link';
-import { showcaseFontVars } from '../fonts';
 import { rm } from '../data';
 import { getShowcaseData } from '../api';
-import { VarsityHeader, VarsityFooter } from '../_components/VarsityChrome';
 import { Animate, Stagger } from '@/components/ui/Animate';
 
 const NAVY = '#1B2A6B';
@@ -28,9 +26,7 @@ function StripeRule() {
 export default async function VarsityMockup() {
   const { products, categories } = await getShowcaseData();
   return (
-    <div className={showcaseFontVars} style={{ background: CREAM, color: INK, fontFamily: 'var(--font-inter), system-ui, sans-serif' }}>
-      <VarsityHeader />
-
+    <>
       {/* Hero */}
       <section className="relative overflow-hidden" style={{ background: CREAM }}>
         {/* faint stripe motif */}
@@ -155,9 +151,7 @@ export default async function VarsityMockup() {
         </div>
       </div>
 
-      <VarsityFooter />
-
       <style>{`@keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }`}</style>
-    </div>
+    </>
   );
 }

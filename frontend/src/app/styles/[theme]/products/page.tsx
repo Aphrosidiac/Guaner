@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ThemedShell, useTheme } from '../../_components/ThemedShell';
+import { useTheme } from '../../_components/ThemedShell';
 import { Animate, Stagger } from '@/components/ui/Animate';
 import { getProducts } from '@/lib/api';
 import { formatPrice } from '@/lib/utils';
@@ -24,8 +24,7 @@ export default function ThemedProducts() {
   const heading: React.CSSProperties = { fontFamily: t.displayFont, textTransform: t.upper ? 'uppercase' : 'none' };
 
   return (
-    <ThemedShell>
-      <section className="max-w-6xl mx-auto px-6 py-12">
+    <section className="max-w-6xl mx-auto px-6 py-12">
         <Animate variant="fadeUp"><h1 className="text-4xl sm:text-5xl mb-8" style={heading}>Shop All</h1></Animate>
         {loading ? (
           <p style={{ color: t.textMuted }}>Loading&hellip;</p>
@@ -51,7 +50,6 @@ export default function ThemedProducts() {
             ))}
           </Stagger>
         )}
-      </section>
-    </ThemedShell>
+    </section>
   );
 }
