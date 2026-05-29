@@ -89,7 +89,7 @@ export function FormalHeader({ overlay = false }: { overlay?: boolean }) {
         <div className="flex items-center gap-4 ml-auto" style={{ color: fg }}>
           <RegionSelect />
           <Link href={`${base}/products`} aria-label="Search" className={iconBtn}><Search className="w-5 h-5" /></Link>
-          <Link href="/track" aria-label="Track order" className={iconBtn}><User className="w-5 h-5" /></Link>
+          <Link href={`${base}/track`} aria-label="Track order" className={iconBtn}><User className="w-5 h-5" /></Link>
           <Link href={`${base}/cart`} aria-label="Cart" className={`${iconBtn} relative`}>
             <ShoppingBag className="w-5 h-5" />
             {itemCount > 0 && (
@@ -106,7 +106,7 @@ export function FormalFooter() {
   const cols: [string, [string, string][]][] = [
     ['SHOP', [['All products', `${base}/products`], ['Cart', `${base}/cart`]]],
     ['BRAND', [['About', `${base}/about`], ['Home', base]]],
-    ['SUPPORT', [['Track order', '/track'], ['Terms', '/terms']]],
+    ['SUPPORT', [['Track order', `${base}/track`], ['Terms', '/terms']]],
   ];
   return (
     <footer style={{ background: '#111111', color: '#FFFFFF' }}>
