@@ -14,11 +14,11 @@ export default async function ThemedNewDrop({ params }: { params: Promise<{ them
   const [feature, ...rest] = products;
 
   return (
-    <section className="max-w-6xl mx-auto px-6 py-12">
+    <section className="max-w-6xl mx-auto px-6 pt-6 pb-16">
       <Animate variant="fadeUp">
-        <p className="text-xs uppercase tracking-[0.3em] mb-3" style={{ color: t.accent }}>SS&rsquo;26 &middot; Just Landed</p>
-        <h1 className="text-4xl sm:text-6xl" style={heading}>The Drop</h1>
-        <p className="mt-4 max-w-md" style={{ color: t.textMuted }}>The latest from the archive &mdash; fresh pieces in limited runs.</p>
+        <p className="text-xs uppercase tracking-[0.3em] mb-2" style={{ color: t.accent }}>SS&rsquo;26 &middot; Just Landed</p>
+        <h1 className="text-4xl sm:text-5xl" style={heading}>The Drop</h1>
+        <p className="mt-3 max-w-md text-sm" style={{ color: t.textMuted }}>The latest from the archive &mdash; fresh pieces in limited runs.</p>
       </Animate>
 
       {products.length === 0 ? (
@@ -27,9 +27,9 @@ export default async function ThemedNewDrop({ params }: { params: Promise<{ them
         <>
           {feature && (
             <Animate variant="fade" duration={0.6}>
-              <Link href={`${base}/products/${feature.slug}`} className="group grid md:grid-cols-2 gap-8 items-center mt-12">
+              <Link href={`${base}/products/${feature.slug}`} className="group grid md:grid-cols-2 gap-8 items-center mt-7">
                 <div className="overflow-hidden" style={{ background: t.surfaceAlt, borderRadius: t.radius, border: `1px solid ${t.border}` }}>
-                  <div className="aspect-[4/5] flex items-center justify-center">
+                  <div className="aspect-[4/5] md:aspect-auto md:h-[58vh] flex items-center justify-center">
                     {feature.imageUrl ? (
                       <img src={feature.imageUrl} alt={feature.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                     ) : (
