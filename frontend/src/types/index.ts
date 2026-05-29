@@ -15,11 +15,8 @@ export interface Product {
   size: string | null;
   price: number;
   description: string | null;
-  benefits: string | null;
-  dosageInfo: string | null;
   stock: number;
   imageUrl: string | null;
-  coaUrl: string | null;
   featured: boolean;
   active: boolean;
   category: {

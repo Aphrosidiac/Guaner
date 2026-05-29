@@ -10,11 +10,8 @@ const productSchema = z.object({
   size: z.string().optional(),
   price: z.number().int().min(0),
   description: z.string().optional(),
-  benefits: z.string().optional(),
-  dosageInfo: z.string().optional(),
   stock: z.number().int().min(0).default(0),
   imageUrl: z.string().nullable().optional(),
-  coaUrl: z.string().nullable().optional(),
   featured: z.boolean().default(false),
   active: z.boolean().default(true),
 });

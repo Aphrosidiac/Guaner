@@ -20,21 +20,16 @@ interface ProductFormData {
   size: string;
   price: string;
   description: string;
-  benefits: string;
-  dosageInfo: string;
   stock: string;
   imageUrl: string;
-  coaUrl: string;
   featured: boolean;
   active: boolean;
 }
 
-const DEFAULT_COA = 'https://verify.janoshik.com/tests/155584-Blind_GLP_C5AGHBRFFNYY';
-
 const emptyForm: ProductFormData = {
   code: '', name: '', slug: '', categoryId: '', size: '',
-  price: '', description: '', benefits: '', dosageInfo: '',
-  stock: '0', imageUrl: '', coaUrl: DEFAULT_COA, featured: false, active: true,
+  price: '', description: '',
+  stock: '0', imageUrl: '', featured: false, active: true,
 };
 
 function slugify(text: string) {
@@ -76,8 +71,6 @@ export default function AdminProductsPage() {
 
   const openEdit = (product: Product) => {
     setEditingId(product.id);
-    let benefits: string[] = [];
-    try { if (product.benefits) benefits = JSON.parse(product.benefits); } catch {}
     setForm({
       code: product.code,
       name: product.name,
@@ -86,11 +79,8 @@ export default function AdminProductsPage() {
       size: product.size || '',
       price: String(product.price / 100),
       description: product.description || '',
-      benefits: benefits.join('\n'),
-      dosageInfo: product.dosageInfo || '',
       stock: String(product.stock),
       imageUrl: product.imageUrl || '',
-      coaUrl: product.coaUrl || DEFAULT_COA,
       featured: product.featured,
       active: product.active,
     });
@@ -111,8 +101,6 @@ export default function AdminProductsPage() {
       return;
     }
 
-    const benefitsArray = form.benefits.split('\n').map(b => b.trim()).filter(Boolean);
-
     const payload = {
       code: form.code,
       name: form.name,
@@ -121,11 +109,8 @@ export default function AdminProductsPage() {
       size: form.size || undefined,
       price: priceInSen,
       description: form.description || undefined,
-      benefits: benefitsArray.length > 0 ? JSON.stringify(benefitsArray) : undefined,
-      dosageInfo: form.dosageInfo || undefined,
       stock: parseInt(form.stock) || 0,
       imageUrl: form.imageUrl || null,
-      coaUrl: form.coaUrl || null,
       featured: form.featured,
       active: form.active,
     };
@@ -293,12 +278,12 @@ export default function AdminProductsPage() {
 
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
               <div className="grid sm:grid-cols-2 gap-4">
-                <Input label="Product Code" id="code" value={form.code} onChange={(e) => updateField('code', e.target.value)} placeholder="e.g. CU50" required />
-                <Input label="Product Name" id="name" value={form.name} onChange={(e) => updateField('name', e.target.value)} placeholder="e.g. GHK-Cu" required />
+                <Input label="Product Code" id="code" value={form.code} onChange={(e) => updateField('code', e.target.value)} placeholder="e.g. GN-TS001" required />
+                <Input label="Product Name" id="name" value={form.name} onChange={(e) => updateField('name', e.target.value)} placeholder="e.g. Essential Oversized Tee" required />
               </div>
 
               <div className="grid sm:grid-cols-2 gap-4">
-                <Input label="Size" id="size" value={form.size} onChange={(e) => updateField('size', e.target.value)} placeholder="e.g. 50mg" />
+                <Input label="Size" id="size" value={form.size} onChange={(e) => updateField('size', e.target.value)} placeholder="e.g. S-XL" />
                 <Input label="URL Slug" id="slug" value={form.slug} onChange={(e) => updateField('slug', e.target.value)} placeholder="Auto-generated" required />
               </div>
 
@@ -361,14 +346,6 @@ export default function AdminProductsPage() {
                 </div>
               </div>
 
-              <Input
-                label="Certificate of Analysis URL"
-                id="coaUrl"
-                value={form.coaUrl}
-                onChange={(e) => updateField('coaUrl', e.target.value)}
-                placeholder="https://verify.janoshik.com/tests/..."
-              />
-
               <div>
                 <label htmlFor="description" className="block text-sm font-medium text-text-secondary mb-1">Description</label>
                 <textarea
@@ -378,30 +355,6 @@ export default function AdminProductsPage() {
                   rows={3}
                   className="w-full px-3 py-2 rounded-lg border border-border bg-surface text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                   placeholder="Product description..."
-                />
-              </div>
-
-              <div>
-                <label htmlFor="benefits" className="block text-sm font-medium text-text-secondary mb-1">Benefits (one per line)</label>
-                <textarea
-                  id="benefits"
-                  value={form.benefits}
-                  onChange={(e) => updateField('benefits', e.target.value)}
-                  rows={4}
-                  className="w-full px-3 py-2 rounded-lg border border-border bg-surface text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                  placeholder={"Stimulates collagen production\nReduces fine lines\nPromotes wound healing"}
-                />
-              </div>
-
-              <div>
-                <label htmlFor="dosageInfo" className="block text-sm font-medium text-text-secondary mb-1">Dosage Info</label>
-                <textarea
-                  id="dosageInfo"
-                  value={form.dosageInfo}
-                  onChange={(e) => updateField('dosageInfo', e.target.value)}
-                  rows={2}
-                  className="w-full px-3 py-2 rounded-lg border border-border bg-surface text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
-                  placeholder="Dosage instructions..."
                 />
               </div>
 

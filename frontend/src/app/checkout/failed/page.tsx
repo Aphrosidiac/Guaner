@@ -8,7 +8,7 @@ import { Animate } from '@/components/ui/Animate';
 import { getSettings } from '@/lib/api';
 
 export default function CheckoutFailedPage() {
-  const [whatsappNumber, setWhatsappNumber] = useState('601161092723');
+  const [whatsappNumber, setWhatsappNumber] = useState('60123456789');
 
   useEffect(() => {
     getSettings().then((s) => {

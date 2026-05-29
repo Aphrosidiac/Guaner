@@ -74,7 +74,7 @@ export default function TermsPage() {
 
         <h2>Contact</h2>
         <p>
-          For questions regarding these terms, contact us via <a href="https://wa.me/601161092723" target="_blank" rel="noopener noreferrer" className="underline">WhatsApp</a>.
+          For questions regarding these terms, contact us via <a href="https://wa.me/60123456789" target="_blank" rel="noopener noreferrer" className="underline">WhatsApp</a>.
         </p>
       </div>
     </div>

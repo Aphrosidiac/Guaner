@@ -5,6 +5,7 @@ import { AnnouncementBar } from '@/components/layout/AnnouncementBar';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { WhatsAppButton } from '@/components/layout/WhatsAppButton';
+import { ChromeGate } from '@/components/layout/ChromeGate';
 import { OrganizationJsonLd } from '@/components/JsonLd';
 import './globals.css';
 
@@ -33,11 +34,15 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-background text-text-primary font-body overflow-x-hidden">
         <OrganizationJsonLd />
         <CartProvider>
-          <AnnouncementBar />
-          <Navbar />
+          <ChromeGate>
+            <AnnouncementBar />
+            <Navbar />
+          </ChromeGate>
           <main className="flex-1">{children}</main>
-          <Footer />
-          <WhatsAppButton />
+          <ChromeGate>
+            <Footer />
+            <WhatsAppButton />
+          </ChromeGate>
         </CartProvider>
       </body>
     </html>

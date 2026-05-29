@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { ShoppingCart, ArrowLeft, Check, ShieldCheck, ExternalLink, Truck } from 'lucide-react';
+import { ShoppingCart, ArrowLeft, Check, ShieldCheck, Truck } from 'lucide-react';
 import { getProduct, getSettings } from '@/lib/api';
 import { useCart } from '@/lib/cart';
 import { formatPrice } from '@/lib/utils';
@@ -71,9 +71,6 @@ export default function ProductDetailPage() {
     );
   }
 
-  let benefits: string[] = [];
-  try { if (product.benefits) benefits = JSON.parse(product.benefits); } catch {}
-
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <ProductJsonLd
@@ -115,20 +112,6 @@ export default function ProductDetailPage() {
             <p className="text-text-secondary leading-relaxed">{product.description}</p>
           )}
 
-          {benefits.length > 0 && (
-            <div>
-              <h3 className="font-display font-semibold mb-3">Benefits</h3>
-              <ul className="space-y-2">
-                {benefits.map((b, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-text-secondary">
-                    <Check className="w-4 h-4 text-success mt-0.5 shrink-0" />
-                    {b}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
           <div className="flex items-center gap-4 pt-4">
             <div className="flex items-center border border-border rounded-lg">
               <button
@@ -164,8 +147,8 @@ export default function ProductDetailPage() {
             <div className="flex items-center gap-2.5 bg-surface-elevated rounded-lg px-3 py-2.5">
               <ShieldCheck className="w-4 h-4 text-text-muted shrink-0" />
               <div>
-                <p className="text-xs font-semibold">3rd Party Verified</p>
-                <p className="text-[11px] text-text-muted">Identity & purity tested</p>
+                <p className="text-xs font-semibold">Quality Guaranteed</p>
+                <p className="text-[11px] text-text-muted">Premium materials & craft</p>
               </div>
             </div>
             <div className="flex items-center gap-2.5 bg-surface-elevated rounded-lg px-3 py-2.5">
@@ -185,28 +168,6 @@ export default function ProductDetailPage() {
         </div>
         </Animate>
       </div>
-
-      {/* Certificate of Analysis */}
-      {product.coaUrl && (
-        <Animate variant="fadeUp" delay={0.25}>
-          <div className="mt-10 bg-surface rounded-xl border border-border p-6">
-            <h3 className="font-display font-semibold text-lg mb-2">Certificate of Analysis</h3>
-            <p className="text-sm text-text-secondary mb-4">
-              All products are independently tested by accredited third-party laboratories. Results confirm identity, purity, and potency.
-            </p>
-            <a
-              href={product.coaUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-surface-elevated hover:bg-border rounded-lg px-4 py-2.5 text-sm font-medium transition-colors"
-            >
-              <ShieldCheck className="w-4 h-4" />
-              Batch COA — {product.name} {product.size}
-              <ExternalLink className="w-3.5 h-3.5 text-text-muted" />
-            </a>
-          </div>
-        </Animate>
-      )}
     </div>
   );
 }

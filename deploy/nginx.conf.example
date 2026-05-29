@@ -1,0 +1,48 @@
+# Guaner nginx reverse proxy.
+# Copy to /etc/nginx/sites-available/guaner, symlink into sites-enabled,
+# then run `sudo certbot --nginx -d guaner.com -d www.guaner.com` to add SSL.
+#
+#   sudo cp deploy/nginx.conf.example /etc/nginx/sites-available/guaner
+#   sudo ln -s /etc/nginx/sites-available/guaner /etc/nginx/sites-enabled/
+#   sudo nginx -t && sudo systemctl reload nginx
+#
+# Replace guaner.com with the real domain. Backend = :3200, Frontend = :3201.
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name guaner.com www.guaner.com;
+
+    # allow product image uploads (backend limit is 5MB)
+    client_max_body_size 10M;
+
+    # API -> Fastify backend
+    location /api/ {
+        proxy_pass http://127.0.0.1:3200;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # Uploaded product images -> Fastify backend (/uploads/)
+    location /uploads/ {
+        proxy_pass http://127.0.0.1:3200;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # Everything else -> Next.js frontend (standalone server)
+    location / {
+        proxy_pass http://127.0.0.1:3201;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+    }
+}

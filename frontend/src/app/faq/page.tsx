@@ -109,7 +109,7 @@ export default function FaqPage() {
           <h3 className="font-display font-semibold mb-2">Still have questions?</h3>
           <p className="text-sm text-text-secondary mb-4">Our team is happy to help with any questions about our products or ordering process.</p>
           <a
-            href="https://wa.me/601161092723"
+            href="https://wa.me/60123456789"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-primary-light transition-colors"
