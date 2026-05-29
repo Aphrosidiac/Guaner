@@ -17,6 +17,7 @@ export interface ShowcaseProduct {
 }
 export interface ShowcaseCategory {
   name: string;
+  slug: string;
   count: number;
   blurb: string;
 }
@@ -32,14 +33,22 @@ interface ApiProduct {
 }
 interface ApiCategory {
   name: string;
+  slug: string;
   productCount: number;
   description: string | null;
 }
 
-export async function getShowcaseData(): Promise<{ products: ShowcaseProduct[]; categories: ShowcaseCategory[] }> {
+const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+export async function getShowcaseData(
+  opts: { featured?: boolean; category?: string; limit?: number } = {}
+): Promise<{ products: ShowcaseProduct[]; categories: ShowcaseCategory[] }> {
+  const qs = new URLSearchParams({ limit: String(opts.limit ?? 24) });
+  if (opts.featured) qs.set('featured', 'true');
+  if (opts.category) qs.set('category', opts.category);
   try {
     const [pRes, cRes] = await Promise.all([
-      fetch(`${API}/api/v1/products?limit=12`, { cache: 'no-store' }),
+      fetch(`${API}/api/v1/products?${qs.toString()}`, { cache: 'no-store' }),
       fetch(`${API}/api/v1/categories`, { cache: 'no-store' }),
     ]);
     if (!pRes.ok || !cRes.ok) throw new Error('bad response');
@@ -58,21 +67,23 @@ export async function getShowcaseData(): Promise<{ products: ShowcaseProduct[]; 
     }));
     const categories: ShowcaseCategory[] = (cJson ?? []).map((c) => ({
       name: c.name,
+      slug: c.slug ?? slugify(c.name),
       count: c.productCount ?? 0,
       blurb: c.description ?? '',
     }));
 
-    if (products.length === 0) throw new Error('empty catalog');
+    // Empty is only a failure signal when unfiltered (a filter can legitimately return 0).
+    if (!opts.featured && !opts.category && products.length === 0) throw new Error('empty catalog');
     return { products, categories };
   } catch {
     // API down — fall back to static demo data so the page still renders.
     return {
       products: fallbackProducts.map((p) => ({
         ...p,
-        slug: p.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+        slug: slugify(p.name),
         imageUrl: null,
       })),
-      categories: fallbackCategories,
+      categories: fallbackCategories.map((c) => ({ ...c, slug: slugify(c.name) })),
     };
   }
 }

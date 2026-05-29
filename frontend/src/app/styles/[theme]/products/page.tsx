@@ -4,18 +4,53 @@ import { Animate, Stagger } from '@/components/ui/Animate';
 import { getShowcaseData } from '../../api';
 import { rm } from '../../data';
 
-export default async function ThemedProducts({ params }: { params: Promise<{ theme: string }> }) {
+export default async function ThemedProducts({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ theme: string }>;
+  searchParams: Promise<{ category?: string }>;
+}) {
   const { theme } = await params;
+  const { category } = await searchParams;
   const t = themes[theme] ?? themes.varsity;
   const base = `/styles/${t.slug}`;
-  const { products } = await getShowcaseData();
+  const { products, categories } = await getShowcaseData({ category });
   const heading: React.CSSProperties = { fontFamily: t.displayFont, textTransform: t.upper ? 'uppercase' : 'none' };
+  const active = category ?? '';
+
+  const chip = (label: string, slug: string) => {
+    const on = active === slug;
+    return (
+      <Link
+        key={slug || 'all'}
+        href={slug ? `${base}/products?category=${slug}` : `${base}/products`}
+        className="px-4 py-2 text-[11px] tracking-[0.14em] uppercase transition-colors"
+        style={
+          on
+            ? { background: t.primary, color: t.primaryText, borderRadius: t.radius }
+            : { border: `1px solid ${t.border}`, color: t.text, borderRadius: t.radius }
+        }
+      >
+        {label}
+      </Link>
+    );
+  };
 
   return (
     <section className="max-w-6xl mx-auto px-6 py-12">
-      <Animate variant="fadeUp"><h1 className="text-4xl sm:text-5xl mb-8" style={heading}>Shop All</h1></Animate>
+      <Animate variant="fadeUp"><h1 className="text-4xl sm:text-5xl mb-6" style={heading}>Shop All</h1></Animate>
+
+      <Animate variant="fadeUp" delay={0.05}>
+        <div className="flex flex-wrap gap-2 mb-5">
+          {chip('All', '')}
+          {categories.map((c) => chip(c.name, c.slug))}
+        </div>
+        <p className="text-xs mb-8" style={{ color: t.textMuted }}>{products.length} {products.length === 1 ? 'piece' : 'pieces'}</p>
+      </Animate>
+
       {products.length === 0 ? (
-        <p style={{ color: t.textMuted }}>No products available.</p>
+        <p style={{ color: t.textMuted }}>Nothing here yet.</p>
       ) : (
         <Stagger className="grid grid-cols-2 lg:grid-cols-4 gap-5" stagger={0.06}>
           {products.map((p) => (

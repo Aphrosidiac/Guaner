@@ -47,9 +47,9 @@ function RegionSelect() {
   );
 }
 const navLeft: [string, string][] = [
-  ['NEW DROP SS’26', `${base}/products`],
+  ['NEW DROP SS’26', `${base}/new`],
   ['SHOP', `${base}/products`],
-  ['COLLECTIONS', `${base}/products`],
+  ['COLLECTIONS', `${base}/collections`],
   ['LOOKBOOK', `${base}/lookbook`],
   ['NEWS', `${base}/about`],
 ];
