@@ -104,6 +104,25 @@ export const themes: Record<string, Theme> = {
     upper: false,
     letterSpacing: '0',
   },
+  formal: {
+    slug: 'formal',
+    label: 'Formal Editorial',
+    bg: '#FFFFFF',
+    surface: '#FFFFFF',
+    surfaceAlt: '#F2F1EF',
+    text: '#111111',
+    textMuted: '#6B6B6B',
+    border: '#E2E1DE',
+    primary: '#111111',
+    primaryText: '#FFFFFF',
+    accent: '#111111',
+    accentText: '#FFFFFF',
+    displayFont: 'var(--font-outfit)',
+    bodyFont: 'var(--font-inter)',
+    radius: '0',
+    upper: true,
+    letterSpacing: '0.12em',
+  },
 };
 
 export const themeSlugs = Object.keys(themes);

@@ -26,6 +26,12 @@ const directions: { slug: string; href?: string; name: string; blurb: string; sw
     swatches: ['#EFE7D6', '#34425A', '#B0432F'],
   },
   {
+    slug: 'formal',
+    name: 'Formal Editorial',
+    blurb: 'Full-bleed hero, transparent overlaid header, monochrome luxury. Inspired by SVG / Malaysian streetwear-luxe brands.',
+    swatches: ['#FFFFFF', '#111111', '#6B6B6B'],
+  },
+  {
     slug: 'store',
     href: '/store',
     name: 'Current Store',

@@ -1,11 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 import { ShoppingCart } from 'lucide-react';
 import { themes, type Theme } from '../themes';
 import { useCart } from '@/lib/cart';
 import { VarsityHeader, VarsityFooter } from './VarsityChrome';
+import { FormalHeader, FormalFooter, FormalChatBubble } from './FormalChrome';
 
 export function useTheme(): Theme {
   const params = useParams();
@@ -17,6 +18,7 @@ export function useTheme(): Theme {
 // applies the base background / font; this adds the chrome on top.
 export function ThemedShell({ children }: { children: React.ReactNode }) {
   const t = useTheme();
+  const pathname = usePathname();
   const { itemCount } = useCart();
   const base = `/styles/${t.slug}`;
   const navStyle: React.CSSProperties = {
@@ -32,6 +34,18 @@ export function ThemedShell({ children }: { children: React.ReactNode }) {
         <VarsityHeader />
         <main className="flex-1 w-full">{children}</main>
         <VarsityFooter />
+      </>
+    );
+  }
+
+  if (t.slug === 'formal') {
+    const isHome = pathname === '/styles/formal';
+    return (
+      <>
+        <FormalHeader overlay={isHome} />
+        <main className={isHome ? 'w-full' : 'flex-1 w-full pt-16'}>{children}</main>
+        {!isHome && <FormalFooter />}
+        <FormalChatBubble />
       </>
     );
   }
