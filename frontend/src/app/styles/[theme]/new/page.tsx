@@ -28,7 +28,7 @@ export default async function ThemedNewDrop({ params }: { params: Promise<{ them
           {feature && (
             <Animate variant="fade" duration={0.6}>
               <Link href={`${base}/products/${feature.slug}`} className="group grid md:grid-cols-2 gap-8 items-center mt-7">
-                <div className="overflow-hidden" style={{ background: t.surfaceAlt, borderRadius: t.radius, border: `1px solid ${t.border}` }}>
+                <div className="overflow-hidden" style={{ background: t.surfaceAlt, borderRadius: t.cardRadius ?? t.radius, border: t.slug !== 'varsity' ? `1px solid ${t.border}` : undefined }}>
                   <div className="aspect-[4/5] md:aspect-auto md:h-[58vh] flex items-center justify-center">
                     {feature.imageUrl ? (
                       <img src={feature.imageUrl} alt={feature.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
@@ -56,7 +56,7 @@ export default async function ThemedNewDrop({ params }: { params: Promise<{ them
               <Stagger className="grid grid-cols-2 lg:grid-cols-4 gap-5" stagger={0.06}>
                 {rest.map((p) => (
                   <Link key={p.code} href={`${base}/products/${p.slug}`} className="group block transition-transform duration-300 hover:-translate-y-1.5">
-                    <div className="relative overflow-hidden mb-3" style={{ background: t.surfaceAlt, borderRadius: t.radius, border: `1px solid ${t.border}` }}>
+                    <div className="relative overflow-hidden mb-3" style={{ background: t.surfaceAlt, borderRadius: t.cardRadius ?? t.radius, border: t.slug !== 'varsity' ? `1px solid ${t.border}` : undefined }}>
                       <div className="aspect-[4/5] flex items-center justify-center">
                         {p.imageUrl ? (
                           <img src={p.imageUrl} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />

@@ -23,7 +23,7 @@ export default async function ThemedDetail({ params }: { params: Promise<{ theme
       ) : (
         <div className="grid md:grid-cols-2 gap-10">
           <Animate variant="fade" duration={0.6} className="group overflow-hidden">
-            <div className="overflow-hidden h-full" style={{ background: t.surfaceAlt, borderRadius: t.radius, border: `1px solid ${t.border}` }}>
+            <div className="overflow-hidden h-full" style={{ background: t.surfaceAlt, borderRadius: t.cardRadius ?? t.radius, border: t.slug !== 'varsity' ? `1px solid ${t.border}` : undefined }}>
               <div className="aspect-[4/5] flex items-center justify-center">
                 {product.imageUrl ? (
                   <img src={product.imageUrl} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />

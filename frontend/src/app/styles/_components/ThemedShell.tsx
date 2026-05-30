@@ -29,11 +29,12 @@ export function ThemedShell({ children }: { children: React.ReactNode }) {
 
   // Per-theme bespoke chrome so inner pages match the homepage header/footer.
   if (t.slug === 'varsity') {
+    const isLookbook = pathname === '/styles/varsity/lookbook';
     return (
       <>
-        <VarsityHeader />
-        <main className="flex-1 w-full">{children}</main>
-        <VarsityFooter />
+        <VarsityHeader overlay={isLookbook} />
+        <main className={isLookbook ? 'w-full' : 'flex-1 w-full'}>{children}</main>
+        {!isLookbook && <VarsityFooter />}
       </>
     );
   }

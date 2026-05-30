@@ -28,7 +28,7 @@ export default async function ThemedCollections({ params }: { params: Promise<{ 
               key={c.slug}
               href={`${base}/products?category=${c.slug}`}
               className="group relative block aspect-[16/10] overflow-hidden"
-              style={{ borderRadius: t.radius, background: t.surfaceAlt, border: `1px solid ${t.border}` }}
+              style={{ borderRadius: t.cardRadius ?? t.radius, background: t.surfaceAlt, border: t.slug !== 'varsity' ? `1px solid ${t.border}` : undefined }}
             >
               {img ? (
                 <img src={img} alt={c.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />

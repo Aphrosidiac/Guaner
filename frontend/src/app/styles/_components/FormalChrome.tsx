@@ -82,7 +82,7 @@ export function FormalHeader({ overlay = false }: { overlay?: boolean }) {
           className="absolute left-1/2 -translate-x-1/2 text-lg font-semibold tracking-[0.4em]"
           style={{ fontFamily: 'var(--font-outfit)' }}
         >
-          GUANER
+          GuanerDott.
         </Link>
 
         {/* right utility */}
@@ -112,7 +112,7 @@ export function FormalFooter() {
     <footer style={{ background: '#111111', color: '#FFFFFF' }}>
       <div className="max-w-[1600px] mx-auto px-6 py-14 grid sm:grid-cols-4 gap-10">
         <div>
-          <p className="text-lg font-semibold tracking-[0.4em]" style={{ fontFamily: 'var(--font-outfit)' }}>GUANER</p>
+          <p className="text-lg font-semibold tracking-[0.4em]" style={{ fontFamily: 'var(--font-outfit)' }}>GuanerDott.</p>
           <p className="text-sm text-white/50 mt-3 max-w-xs">Quality clothing for the modern individual. Made for Malaysia.</p>
           <Link href="/styles" className="inline-block mt-4 text-xs tracking-[0.18em] text-white/60 underline hover:text-white">&larr; ALL THEMES</Link>
         </div>
@@ -125,7 +125,7 @@ export function FormalFooter() {
           </div>
         ))}
       </div>
-      <div className="text-center text-[11px] tracking-[0.18em] text-white/30 pb-8">&copy; 2026 GUANER. ALL RIGHTS RESERVED.</div>
+      <div className="text-center text-[11px] tracking-[0.18em] text-white/30 pb-8">&copy; 2026 GUANERDOTT. ALL RIGHTS RESERVED.</div>
     </footer>
   );
 }

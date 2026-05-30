@@ -28,8 +28,8 @@ export default async function ThemedProducts({
         className="px-4 py-2 text-[11px] tracking-[0.14em] uppercase transition-colors"
         style={
           on
-            ? { background: t.primary, color: t.primaryText, borderRadius: t.radius }
-            : { border: `1px solid ${t.border}`, color: t.text, borderRadius: t.radius }
+            ? { background: t.primary, color: t.primaryText, borderRadius: t.cardRadius ?? t.radius}
+            : { border: t.slug !== 'varsity' ? `1px solid ${t.border}` : undefined, color: t.text, borderRadius: t.cardRadius ?? t.radius}
         }
       >
         {label}
@@ -55,7 +55,7 @@ export default async function ThemedProducts({
         <Stagger className="grid grid-cols-2 lg:grid-cols-4 gap-5" stagger={0.06}>
           {products.map((p) => (
             <Link key={p.code} href={`${base}/products/${p.slug}`} className="group block transition-transform duration-300 hover:-translate-y-1.5">
-              <div className="overflow-hidden mb-3" style={{ background: t.surfaceAlt, borderRadius: t.radius, border: `1px solid ${t.border}` }}>
+              <div className="overflow-hidden mb-3" style={{ background: t.surfaceAlt, borderRadius: t.cardRadius ?? t.radius, border: t.slug !== 'varsity' ? `1px solid ${t.border}` : undefined }}>
                 <div className="aspect-[4/5] flex items-center justify-center">
                   {p.imageUrl ? (
                     <img src={p.imageUrl} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />

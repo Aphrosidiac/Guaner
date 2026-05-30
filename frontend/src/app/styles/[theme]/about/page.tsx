@@ -14,7 +14,7 @@ export default async function ThemedAbout({ params }: { params: Promise<{ theme:
       <Animate variant="fadeUp" delay={0.1}><h1 className="text-4xl sm:text-5xl mb-6 leading-tight" style={heading}>Quality clothing, built to last.</h1></Animate>
       <Animate variant="fadeUp" delay={0.2}>
         <p className="text-lg leading-relaxed mb-4" style={{ color: t.text }}>
-          GUANER makes heavyweight everyday staples &mdash; tees, hoodies and more &mdash; designed to look good, feel better, and age well. Dropped in limited runs and shipped nationwide across Malaysia.
+          GuanerDott. makes heavyweight everyday staples &mdash; tees, hoodies and more &mdash; designed to look good, feel better, and age well. Dropped in limited runs and shipped nationwide across Malaysia.
         </p>
       </Animate>
       <Animate variant="fadeUp" delay={0.3}>

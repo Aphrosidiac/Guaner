@@ -20,7 +20,7 @@ export default function FormalHome() {
         >
           <img
             src={s.img}
-            alt="GUANER — Summer '26"
+            alt="GuanerDott. — Summer '26"
             className="absolute inset-0 w-full h-full object-cover"
             style={{ objectPosition: s.pos }}
           />

@@ -33,7 +33,7 @@ export default function ThemedCart() {
             <Stagger className="space-y-4" stagger={0.08}>
               {items.map((it) => (
                 <div key={it.productId} className="flex items-center gap-4 p-3" style={{ background: t.surface, border: `1px solid ${t.border}`, borderRadius: t.radius }}>
-                  <div className="w-16 h-20 shrink-0 overflow-hidden flex items-center justify-center" style={{ background: t.surfaceAlt, borderRadius: t.radius }}>
+                  <div className="w-16 h-20 shrink-0 overflow-hidden flex items-center justify-center" style={{ background: t.surfaceAlt, borderRadius: t.cardRadius ?? t.radius }}>
                     {it.imageUrl ? (
                       <img src={it.imageUrl} alt={it.name} className="w-full h-full object-cover" />
                     ) : (

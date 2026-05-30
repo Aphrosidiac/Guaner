@@ -20,7 +20,7 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: { default: 'GUANER', template: '%s | GUANER' },
+  title: { default: 'GuanerDott.', template: '%s | GuanerDott.' },
   description: 'Quality clothing for the modern individual.',
 };
 

@@ -22,6 +22,7 @@ export interface Theme {
   scriptFont?: string;
   // style
   radius: string;
+  cardRadius?: string; // override for product/image boxes (defaults to radius)
   upper: boolean; // uppercase display headings
   letterSpacing: string;
 }
@@ -43,6 +44,7 @@ export const themes: Record<string, Theme> = {
     displayFont: 'var(--font-anton)',
     bodyFont: 'var(--font-inter)',
     radius: '1rem',
+    cardRadius: '0',
     upper: true,
     letterSpacing: '0.01em',
   },

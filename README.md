@@ -1,10 +1,10 @@
-# GUANER — Quality Clothing Malaysia
+# GuanerDott. — Quality Clothing Malaysia
 
 Full-stack e-commerce platform for a clothing brand. Built with Next.js 16, Fastify 5, Prisma 7, and PostgreSQL.
 
 > **Live demo:** https://guaner.apdevotion.my
 >
-> This is currently a **working demo**, not the final site. The root (`/`) redirects to a **design-direction chooser** at `/styles`, where you can preview the store in 4 themes (Varsity, Streetwear, Minimal, Vintage) plus the **current store** at `/store`. Each themed mini-site has a working home → products → product detail (add-to-cart) → cart → about flow, all driven by the live backend. A theme has not been chosen yet; once it is, that system gets promoted store-wide and `/styles` is retired.
+> This is currently a **working demo**, not the final site. The root (`/`) redirects to a **design-direction chooser** at `/styles`, where you can preview the store in 4 themes (Varsity, Streetwear, Minimal, Vintage) plus the **current store** at `/store`. Each themed mini-site has a full storefront — home, new drop, shop, collections, lookbook, product detail, cart, about, and order tracking — driven by the live backend. **Varsity is the current lead candidate**: it has bespoke chrome (header w/ mobile drawer + search overlay), a scroll-pinned editorial photo section (GSAP ScrollTrigger), a cinematic scroll-snap lookbook, and a sharp-rectangle visual language. Once a theme is chosen it gets promoted store-wide and `/styles` is retired.
 
 ## Tech Stack
 
@@ -29,8 +29,11 @@ Full-stack e-commerce platform for a clothing brand. Built with Next.js 16, Fast
 |------|------|
 | `/` | Redirects to `/styles` |
 | `/styles` | Design-direction chooser (5 cards) |
-| `/styles/{theme}` | Themed homepage — `varsity` / `streetwear` / `minimal` / `vintage` |
-| `/styles/{theme}/products`, `/products/[slug]`, `/cart`, `/about` | Shared inner pages, restyled per theme via tokens (`styles/themes.ts` + `_components/ThemedShell`) |
+| `/styles/{theme}` | Themed homepage — `varsity` / `streetwear` / `minimal` / `vintage` / `formal` |
+| `/styles/{theme}/new` | New drop (featured products) |
+| `/styles/{theme}/collections` | Browse by category tiles |
+| `/styles/{theme}/lookbook` | Scroll-snap cinematic lookbook (5 looks + winged-rose interlude + shop CTA) |
+| `/styles/{theme}/products`, `/products/[slug]`, `/cart`, `/about`, `/track` | Shared inner pages, restyled per theme via tokens (`styles/themes.ts` + `_components/ThemedShell`) |
 | `/store`, `/products`, `/cart`, `/checkout`, `/about`, `/faq`, … | The current monochrome store (global navbar/footer) |
 | `/admin/*` | Admin panel |
 
@@ -60,10 +63,18 @@ Themed homepages are bespoke (`styles/_homes/*`); the inner pages are **one shar
 - Scroll-triggered animations (Animate/Stagger components)
 - Floating WhatsApp button on all pages
 - Mobile-responsive with collapsible admin sidebar
+- **Varsity-only**: header search overlay (cream panel drops from top w/ blur backdrop, live client-side catalog filter, staggered result cards), mobile hamburger drawer (slides in from right, full nav in Anton uppercase), GSAP ScrollTrigger pinned hero photo sequence (`VarsityScrollCards` — 3 editorial photos slide-up over each other across ~250vh of scroll), scroll-snap immersive lookbook with side rail, theme-aware shop-tag sticker style
+
+### Varsity build status
+- Bespoke `VarsityHeader` + `VarsityFooter` + `VarsityMobileMenu` + `VarsitySearch` in `styles/_components/VarsityChrome.tsx`
+- Sharp-rectangle visual language (cardRadius theme token override) on all product/category/filter boxes — borderless on shop/collections/new/detail for varsity only, other themes keep their 1px border
+- `VarsityScrollCards` (`styles/_components/VarsityScrollCards.tsx`) — desktop uses GSAP `gsap.matchMedia('(min-width: 768px)')` + `ScrollTrigger` with `pin: true`, `scrub: 0.6`, `end: '+=250%'`; mobile falls back to 3 stacked `h-screen` sections (no pin). Initial card hide uses `opacity: 0` CSS class (not `transform`) so GSAP fully owns the transform — separating "hide" from "position" was the fix
+- Hero crest: offset-shadow brutalist block (white card + red shadow block offset by `translate-x-4 translate-y-4`, NEW SEASON sharp top strip, hover slides the card into the shadow)
 
 ### Admin Panel (`/admin`)
 - Dashboard with stats, recent orders, low stock alerts
 - Product CRUD: images, pricing, stock, size, featured toggle
+- **Collections (categories) CRUD** — create/rename/delete, blocks delete if products exist
 - Order management: status updates, payment tracking, WhatsApp customer link
 - Discount codes
 - Settings: WhatsApp number, business info, shipping fee, payment gateway
@@ -227,6 +238,7 @@ Proxies `/api/*` and `/uploads/*` to backend, everything else to frontend. SSL v
 - `GET /api/v1/auth/me` — current admin user
 - `GET /api/v1/admin/dashboard/stats` — dashboard stats
 - `GET/POST/PATCH/DELETE /api/v1/admin/products` — product CRUD (size, featured)
+- `GET/POST/PATCH/DELETE /api/v1/admin/categories` — collections CRUD (delete blocked if products exist)
 - `GET/PATCH /api/v1/admin/orders` — order management
 - `GET/PUT /api/v1/admin/settings` — store settings
 - `POST /api/v1/admin/upload/image` — product image upload (JPEG/PNG/WebP, max 5MB)
